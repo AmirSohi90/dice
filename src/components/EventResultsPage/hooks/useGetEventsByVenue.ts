@@ -6,8 +6,15 @@ import {
   MusicTracks,
   TicketTypes,
 } from '../../../types/EventData';
+import {
+  calculateResponseStatus,
+  ResponseStatus,
+} from './calculateResponseStatus';
 
-type GetEventsByVenueResponse = { data: Array<EventsByVenueResponse> | null };
+type GetEventsByVenueResponse = {
+  data: Array<EventsByVenueResponse> | undefined;
+  responseStatus: ResponseStatus;
+};
 
 type EventsByVenueResponse = {
   id: string;
@@ -85,15 +92,21 @@ export const useGetEventsByVenue = (
 ): GetEventsByVenueResponse => {
   const queryKey = `venueName:${venueName}`;
   const options = { enabled: !!venueName };
-  const { data, status } = useQuery(
+  const queryResult = useQuery(
     queryKey,
     () => apis.getEventsByVenue(venueName),
     options
   );
+
+  const { data } = queryResult;
+
+  const responseStatus = calculateResponseStatus(queryResult, venueName);
+
   return {
     data:
-      status === 'success'
+      data && !!data.data.length
         ? data.data.map((event: EventData) => mapEventData(event))
-        : null,
+        : undefined,
+    responseStatus,
   };
 };

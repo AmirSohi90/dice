@@ -4,6 +4,7 @@ import { EventData } from '../../../../types/EventData';
 import { useGetEventsByVenue } from '../useGetEventsByVenue';
 import { renderHookWithProviders } from '../../../../testHelpers/renderHookWithProviders';
 import { EventDataBuilder } from '../../../../testHelpers/builders/eventDataBuilder';
+import { ResponseStatus } from '../calculateResponseStatus';
 
 const data: EventData = new EventDataBuilder().build();
 
@@ -55,6 +56,50 @@ describe('[useGetEventsByVenue]', () => {
             url: data.url,
           },
         ],
+        responseStatus: ResponseStatus.SUCCESS,
+      });
+    });
+  });
+
+  it('should return a LOADING status if API has not responded yet', async () => {
+    const { result } = renderHookWithProviders(() =>
+      useGetEventsByVenue('test-venue')
+    );
+
+    await waitFor(() => {
+      expect(apis.getEventsByVenue).toHaveBeenCalledTimes(1);
+      expect(result.current).toEqual({
+        data: undefined,
+        responseStatus: ResponseStatus.LOADING,
+      });
+    });
+  });
+
+  it('should return an IDLE status if there is no venue name', async () => {
+    const { result } = renderHookWithProviders(() => useGetEventsByVenue(''));
+
+    await waitFor(() => {
+      expect(apis.getEventsByVenue).toHaveBeenCalledTimes(0);
+      expect(result.current).toEqual({
+        data: undefined,
+        responseStatus: ResponseStatus.IDLE,
+      });
+    });
+  });
+
+  it('should return an SUCCESS status if there is no venue found', async () => {
+    jest
+      .spyOn(apis, 'getEventsByVenue')
+      .mockResolvedValueOnce({ data: [], links: { self: 'link' } });
+    const { result } = renderHookWithProviders(() =>
+      useGetEventsByVenue('NOT FOUND')
+    );
+
+    await waitFor(() => {
+      expect(apis.getEventsByVenue).toHaveBeenCalledTimes(1);
+      expect(result.current).toEqual({
+        data: undefined,
+        responseStatus: ResponseStatus.SUCCESS,
       });
     });
   });
