@@ -55,7 +55,7 @@ export class EventDataBuilder {
         sold_out: false,
       },
     ],
-    venue: 'Public Records',
+    venue: 'Test Venue',
     featured: false,
     url: 'https://link.dice.fm/l39c3b1d80b6',
   };

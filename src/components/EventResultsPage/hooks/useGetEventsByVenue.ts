@@ -10,6 +10,7 @@ import {
   calculateResponseStatus,
   ResponseStatus,
 } from './calculateResponseStatus';
+import { useDebouncedValue } from './useDebounceValue';
 
 type GetEventsByVenueResponse = {
   data: Array<EventsByVenueResponse> | undefined;
@@ -90,11 +91,12 @@ const mapEventData = (event: EventData): EventsByVenueResponse => ({
 export const useGetEventsByVenue = (
   venueName: string
 ): GetEventsByVenueResponse => {
-  const queryKey = `venueName:${venueName}`;
-  const options = { enabled: !!venueName };
+  const venueNameToSearch = useDebouncedValue(venueName);
+  const queryKey = `venueName:${venueNameToSearch}`;
+  const options = { enabled: !!venueNameToSearch };
   const queryResult = useQuery(
     queryKey,
-    () => apis.getEventsByVenue(venueName),
+    () => apis.getEventsByVenue(venueNameToSearch),
     options
   );
 
