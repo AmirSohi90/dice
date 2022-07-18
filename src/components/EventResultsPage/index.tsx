@@ -5,6 +5,7 @@ import {
   SearchFormWrapper,
 } from './EventResultsPage.styles';
 import { useGetEventsByVenue } from './hooks/useGetEventsByVenue';
+import { getFormattedDate } from "../../helpers/getFormattedDate";
 
 export const EventsResultsPage = () => {
   const [venueName, setVenueName] = useState('');
@@ -25,8 +26,13 @@ export const EventsResultsPage = () => {
       </SearchFormWrapper>
       {!!venueName && <div>Your search results for {venueName}</div>}
       {data?.map((event) => {
+
+        const {formattedDate, formattedTime} = getFormattedDate(event.startDate)
+        console.log(formattedTime)
+
         return (
           <div key={event.id}>
+            <span>{formattedDate} - {formattedTime}</span>
             <span>{event.name}</span>
             <span>{event.venue}</span>
             <span>

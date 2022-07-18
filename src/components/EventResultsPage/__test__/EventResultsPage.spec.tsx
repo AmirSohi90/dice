@@ -68,6 +68,7 @@ describe('[EventsResultsPage]', () => {
       expect(
         screen.getByText(new RegExp(`${data.ticket_types[0].price.total}`))
       ).toBeInTheDocument();
+      expect(screen.getByText(/Sun 3 Apr - 18:00/)).toBeInTheDocument()
     });
   });
 });
