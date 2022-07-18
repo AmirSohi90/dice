@@ -1,13 +1,22 @@
-import React from 'react'
+import React from 'react';
+import apis from './apis/apis';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-function App() {
+const queryClient = new QueryClient();
+
+const App = () => {
+  const res = apis.getEventsByVenue();
+  console.log(res.then((res) => res));
+
   return (
-    <div>
-      <header>
-        <p>hello</p>
-      </header>
-    </div>
-  )
-}
+    <QueryClientProvider client={queryClient}>
+      <div>
+        <header>
+          <p>hello</p>
+        </header>
+      </div>
+    </QueryClientProvider>
+  );
+};
 
-export default App
+export default App;
