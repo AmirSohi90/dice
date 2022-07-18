@@ -4,7 +4,7 @@ import { EventData } from '../../../../types/EventData';
 import { useGetEventsByVenue } from '../useGetEventsByVenue';
 import { renderHookWithProviders } from '../../../../testHelpers/renderHookWithProviders';
 import { EventDataBuilder } from '../../../../testHelpers/builders/eventDataBuilder';
-import { ResponseStatus } from "../calculateResponseStatus";
+import { ResponseStatus } from '../calculateResponseStatus';
 
 const data: EventData = new EventDataBuilder().build();
 
@@ -13,11 +13,11 @@ describe('[useGetEventsByVenue]', () => {
 
   it('should return a list of formatted event data', async () => {
     jest
-        .spyOn(apis, 'getEventsByVenue')
-        .mockResolvedValueOnce({ data: [data], links: { self: 'link' } });
+      .spyOn(apis, 'getEventsByVenue')
+      .mockResolvedValueOnce({ data: [data], links: { self: 'link' } });
 
     const { result } = renderHookWithProviders(() =>
-        useGetEventsByVenue('test-venue')
+      useGetEventsByVenue('test-venue')
     );
 
     await waitFor(() => {
@@ -56,20 +56,23 @@ describe('[useGetEventsByVenue]', () => {
             url: data.url,
           },
         ],
-        responseStatus: ResponseStatus.SUCCESS
+        responseStatus: ResponseStatus.SUCCESS,
       });
     });
   });
 
   it('should return a LOADING status if API has not responded yet', async () => {
     const { result } = renderHookWithProviders(() =>
-        useGetEventsByVenue('test-venue')
+      useGetEventsByVenue('test-venue')
     );
 
     await waitFor(() => {
       expect(apis.getEventsByVenue).toHaveBeenCalledTimes(1);
-      expect(result.current).toEqual({ data: undefined, responseStatus: ResponseStatus.LOADING })
-    })
+      expect(result.current).toEqual({
+        data: undefined,
+        responseStatus: ResponseStatus.LOADING,
+      });
+    });
   });
 
   it('should return an IDLE status if there is no venue name', async () => {
@@ -77,17 +80,27 @@ describe('[useGetEventsByVenue]', () => {
 
     await waitFor(() => {
       expect(apis.getEventsByVenue).toHaveBeenCalledTimes(0);
-      expect(result.current).toEqual({ data: undefined, responseStatus: ResponseStatus.IDLE })
-    })
+      expect(result.current).toEqual({
+        data: undefined,
+        responseStatus: ResponseStatus.IDLE,
+      });
+    });
   });
 
   it('should return an SUCCESS status if there is no venue found', async () => {
-    jest.spyOn(apis, 'getEventsByVenue').mockResolvedValueOnce({ data: [], links: { self: 'link' } })
-    const { result } = renderHookWithProviders(() => useGetEventsByVenue('NOT FOUND'));
+    jest
+      .spyOn(apis, 'getEventsByVenue')
+      .mockResolvedValueOnce({ data: [], links: { self: 'link' } });
+    const { result } = renderHookWithProviders(() =>
+      useGetEventsByVenue('NOT FOUND')
+    );
 
     await waitFor(() => {
       expect(apis.getEventsByVenue).toHaveBeenCalledTimes(1);
-      expect(result.current).toEqual({ data: undefined, responseStatus: ResponseStatus.SUCCESS })
-    })
+      expect(result.current).toEqual({
+        data: undefined,
+        responseStatus: ResponseStatus.SUCCESS,
+      });
+    });
   });
 });
