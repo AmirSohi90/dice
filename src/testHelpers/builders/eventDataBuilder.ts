@@ -1,4 +1,4 @@
-import { EventData } from 'src/types/EventData';
+import { EventData } from '../../types/EventData';
 
 export class EventDataBuilder {
   private eventData: EventData = {
