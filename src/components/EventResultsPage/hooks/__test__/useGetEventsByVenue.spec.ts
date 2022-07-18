@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/react';
 import apis from '../../../apis/apis';
 import { EventData } from '../../../types/EventData';
 import { useGetEventsByVenue } from '../useGetEventsByVenue';
-import { renderHookWithProviders } from '../../../testHelpers/renderHookWithProviders';
+import { renderHookWithProviders } from "../../../testHelpers/renderHookWithProviders";
 
 const data: EventData = {
   apple_music_tracks: [],
@@ -38,8 +38,7 @@ const data: EventData = {
   ],
   id: '622907b21cae6c00017bef1b',
   timezone: 'America/New_York',
-  description:
-    'DURATIONS full season pass. \n\nFeaturing access to the following four Sunday shows: \n\n4.03\nPan American \nUlla \nRelaxer\n\n7.10\nKara-Lis Coverdale\nCeler\nC. Lavender\n\n9.18\nQuiet Time feat.\nD.K.\nNueen\nGi Gi\nBen Bondy\n\n\n11.06\nValentino Mora\nRAMZi\n+ a very special guest\n\nPresented by Speakmans Gowanus LLC dba Public Records.\n\nThis is an 18+ event',
+  description: 'Event Description',
   sale_start_date: '2022-03-09T18:30:00Z',
   location: {
     city: 'New York',
@@ -65,16 +64,56 @@ const data: EventData = {
 };
 
 describe('[useGetEventsByVenue]', () => {
+
+  afterEach(() => jest.resetAllMocks());
+
   it('should return a list of formatted event data', async () => {
     jest
       .spyOn(apis, 'getEventsByVenue')
       .mockResolvedValueOnce({ data: [data], links: { self: 'link' } });
 
-    // const { result } = renderHookWithProviders(useGetEventsByVenue);
-    //
-    // await waitFor(() => {
-    //   expect(apis.getEventsByVenue).toHaveBeenCalledTimes(1);
-    // });
-    // expect(result.current).toEqual({});
+    const { result } = renderHookWithProviders(() => useGetEventsByVenue('test-venue'));
+
+    await waitFor(() => {
+      expect(apis.getEventsByVenue).toHaveBeenCalledTimes(1);
+      expect(result.current).toEqual({
+        data: [
+          {
+            id: '622907b21cae6c00017bef1b',
+            previewTrack:
+                'https://p.scdn.co/mp3-preview/c9d2dd97a30ec71fd9c8328a1c5dabbda8c8c130?cid=921526b9c2da4b7b96e197790a02347e',
+            name: 'DURATIONS: Season pass',
+            lineup: [
+              {
+                details: 'Pan•American',
+                time: '',
+              },
+            ],
+            description: 'Event Description',
+            isFeatured: false,
+            tickets: [
+              {
+                id: 204638,
+                name: 'General Admission',
+                price: 8385,
+                soldOut: false,
+              },
+            ],
+            startTime: '1:00 PM',
+            startDate: '2022-04-03T17:00:00Z',
+            isSoldOut: false,
+            image:
+                'https://dice-media.imgix.net/attachments/2022-03-09/28fe0827-d020-4754-bfcf-fba7ab7a87e7.jpg?rect=0%2C600%2C3000%2C3000',
+            venue: 'Public Records',
+            city: 'New York',
+            country: 'United States',
+            onSaleFrom: '2022-03-09T18:30:00Z',
+            currency: 'USD',
+            url: 'https://link.dice.fm/l39c3b1d80b6',
+          },
+        ],
+      });
+    });
+
   });
 });

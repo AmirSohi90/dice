@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 const queryClient = new QueryClient();
 
 const App = () => {
-  const res = apis.getEventsByVenue();
+  const res = apis.getEventsByVenue('Public Records');
   console.log(res.then((res) => res));
 
   return (
