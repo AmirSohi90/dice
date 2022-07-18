@@ -1,6 +1,11 @@
 import { useQuery } from 'react-query';
 import apis from '../../../apis/apis';
-import { EventData } from '../../../types/EventData';
+import {
+  EventData,
+  Lineup,
+  MusicTracks,
+  TicketTypes,
+} from '../../../types/EventData';
 
 type GetEventsByVenueResponse = { data: Array<EventsByVenueResponse> | null };
 
@@ -8,10 +13,7 @@ type EventsByVenueResponse = {
   id: string;
   previewTrack: string | null;
   name: string;
-  lineup: Array<{
-    details: string;
-    time: string;
-  }>;
+  lineup: Array<Lineup>;
   description: string;
   isFeatured: boolean;
   tickets: Array<{
@@ -32,23 +34,15 @@ type EventsByVenueResponse = {
   url: string;
 };
 
-const mapLineUp = (lineup: Array<{ details: string; time: string }>) =>
+const mapLineUp = (lineup: Array<Lineup>) =>
   lineup.filter((artist) => artist.details !== 'Doors open');
 
-const getStartTime = (lineup: Array<{ details: string; time: string }>) =>
+const getStartTime = (lineup: Array<Lineup>) =>
   lineup.find((artist) => artist.details === 'Doors open')?.time || '';
 
 const getPreviewTrack = (
-  spotifyTracks: Array<{
-    open_url: string;
-    preview_url: string;
-    title: string;
-  }>,
-  appleMusicTracks: Array<{
-    open_url: string;
-    preview_url: string;
-    title: string;
-  }>
+  spotifyTracks: Array<MusicTracks>,
+  appleMusicTracks: Array<MusicTracks>
 ) => {
   const eventHasSpotifyTrack = !!spotifyTracks.length;
   const eventHasAppleTrack = !!appleMusicTracks.length;
@@ -58,14 +52,7 @@ const getPreviewTrack = (
   return null;
 };
 
-const getTicketData = (
-  tickets: Array<{
-    id: number;
-    name: string;
-    price: { face_value: number; fees: number; total: number };
-    sold_out: boolean;
-  }>
-) =>
+const getTicketData = (tickets: Array<TicketTypes>) =>
   tickets.map(({ id, name, price, sold_out }) => ({
     id,
     name,
