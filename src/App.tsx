@@ -1,13 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-function App() {
+const queryClient = new QueryClient();
+
+const App = () => {
   return (
-    <div>
-      <header>
-        <p>hello</p>
-      </header>
-    </div>
-  )
-}
+    <QueryClientProvider client={queryClient}>
+      <div>
+        <header>
+          <p>hello</p>
+        </header>
+      </div>
+    </QueryClientProvider>
+  );
+};
 
-export default App
+export default App;
