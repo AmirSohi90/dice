@@ -71,7 +71,7 @@ const getTicketData = (tickets: Array<TicketTypes>) =>
 const mapEventData = (event: EventData): EventsByVenueResponse => ({
   id: event.id,
   name: event.name,
-  description: event.description,
+  description: event.raw_description,
   isFeatured: event.featured,
   isSoldOut: event.sold_out,
   venue: event.venue,

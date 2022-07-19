@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
 
+type EventImageProps = {
+  image: string;
+}
+
 const SearchFormWrapper = styled.div`
   //position: fixed;
   padding: 80px 0 0;
@@ -13,6 +17,16 @@ const SearchFormWrapper = styled.div`
 const SearchByVenueForm = styled.form`
   max-width: 1080px;
 `;
+
+const EventImage = styled.img<EventImageProps>`
+  background: ${props => `url(${props.image})`};
+  background-size:contain;
+  height: 160px;
+  width: 100%;
+  background-position:center;
+  background-size: cover;
+  margin-bottom: 16px;
+`
 
 const SearchByVenueTextInput = styled.input`
   appearance: none;
@@ -28,4 +42,110 @@ const SearchByVenueTextInput = styled.input`
   border: black solid 1px;
 `;
 
-export { SearchFormWrapper, SearchByVenueForm, SearchByVenueTextInput };
+const EventsWrapper = styled.div``;
+
+const EventWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const EventDataAndTime = styled.span`
+  color: #000000;
+  font-size: 1rem;
+  margin-bottom: 8px;
+`;
+
+const EventName = styled.h2`
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+`;
+
+const EventVenue = styled.h3`
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+const EventVenueLocation = styled.span`
+  font-size: 1rem;
+  margin-bottom: 16px;
+`;
+
+const EventDescriptionWrapper = styled.div`
+  padding: 11px 16px;
+  background-color: #f2f2f2;
+  margin-bottom: 24px;
+`;
+
+const EventDescription = styled.p`
+  font-size: 1rem;
+  margin-bottom: 16px;
+`;
+
+const EventInfoTitle = styled.span`
+  font-size: 0.875rem;
+  color: #3c74ff;
+  margin-bottom: 16px;
+  display: block;
+  font-weight: bold;
+`;
+
+const EventLineupOrderedList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  padding: 0;
+`;
+
+const EventLineupListItem = styled.li`
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 8px;
+`
+
+const EventTicketsOrderedList = styled(EventLineupOrderedList)`margin-bottom: 0;`
+
+const EventTicketListItem = styled(EventLineupListItem)`
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+`
+
+const EventButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const EventButtonLink = styled.a`
+  display: block;
+  width: 160px;
+  background-color: #3C74FF;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 12px 0;
+`
+
+export {
+  SearchFormWrapper,
+  SearchByVenueForm,
+  SearchByVenueTextInput,
+  EventsWrapper,
+  EventWrapper,
+  EventDataAndTime,
+  EventName,
+  EventVenue,
+  EventVenueLocation,
+  EventDescriptionWrapper,
+  EventDescription,
+  EventInfoTitle,
+  EventLineupOrderedList,
+  EventLineupListItem,
+  EventTicketsOrderedList,
+  EventTicketListItem,
+  EventButtonWrapper,
+  EventButtonLink,
+  EventImage
+};

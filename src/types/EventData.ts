@@ -36,6 +36,7 @@ export type EventData = {
   id: string;
   timezone: string;
   description: string;
+  raw_description: string;
   sale_start_date: string;
   location: Location;
   currency: string;

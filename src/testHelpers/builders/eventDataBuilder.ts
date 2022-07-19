@@ -16,6 +16,7 @@ export class EventDataBuilder {
     sold_out: false,
     status: 'off-sale',
     name: 'DURATIONS: Season pass',
+    raw_description: 'test description',
     event_images: {
       brand: null,
       landscape:
