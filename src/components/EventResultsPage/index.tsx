@@ -6,15 +6,11 @@ import {
   SearchFormWrapper,
 } from './EventResultsPage.styles';
 import { useGetEventsByVenue } from './hooks/useGetEventsByVenue';
-import { getFormattedDate } from '../../helpers/getFormattedDate';
 import { EventDetail } from './sections/EventDetail';
 
-export const EventsResultsPage = () => {
+export const EventsResultsPage: React.FC = () => {
   const [venueName, setVenueName] = useState('');
   const { data } = useGetEventsByVenue(venueName);
-  const newData = data?.length ? [data[0]] : [];
-
-  console.log(newData);
 
   return (
     <div>
@@ -31,7 +27,8 @@ export const EventsResultsPage = () => {
       </SearchFormWrapper>
       {!!venueName && <div>Your search results for {venueName}</div>}
       <EventsWrapper>
-        {newData?.map((event) =>           <EventDetail
+        {data?.map((event) => (
+          <EventDetail
             key={event.id}
             image={event.image}
             startDate={event.startDate}
@@ -44,7 +41,8 @@ export const EventsResultsPage = () => {
             tickets={event.tickets}
             url={event.url}
             currency={event.currency}
-        />)}
+          />
+        ))}
       </EventsWrapper>
     </div>
   );

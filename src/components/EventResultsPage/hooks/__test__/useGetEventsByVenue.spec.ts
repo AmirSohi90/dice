@@ -34,7 +34,7 @@ describe('[useGetEventsByVenue]', () => {
                 time: '',
               },
             ],
-            description: data.description,
+            description: data.raw_description,
             isFeatured: data.featured,
             tickets: [
               {

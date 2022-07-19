@@ -26,9 +26,9 @@ type EventImages = {
 };
 
 export enum Currencies {
-  USD = "USD",
-      GBP = "GBP",
-      EUR = "EUR"
+  USD = 'USD',
+  GBP = 'GBP',
+  EUR = 'EUR',
 }
 
 export type EventData = {

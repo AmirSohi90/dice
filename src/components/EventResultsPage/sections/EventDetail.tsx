@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   EventButtonLink,
   EventButtonWrapper,
@@ -9,7 +9,9 @@ import {
   EventInfoTitle,
   EventLineupListItem,
   EventLineupOrderedList,
+  EventLowestTicketPriceText, EventMoreInfo, EventMoreInfoText,
   EventName,
+  EventSoldOutText,
   EventTicketListItem,
   EventTicketsOrderedList,
   EventVenue,
@@ -18,7 +20,8 @@ import {
 } from '../EventResultsPage.styles';
 import { Currencies, Lineup } from '../../../types/EventData';
 import { getFormattedDate } from '../../../helpers/getFormattedDate';
-import { getFormattedPrice } from "../../../helpers/getFormattedPrice";
+import { getFormattedPrice } from '../../../helpers/getFormattedPrice';
+import { getLowestPrice } from '../../../helpers/getLowestPrice';
 
 type Props = {
   image: string;
@@ -29,7 +32,7 @@ type Props = {
   country: string;
   description: string;
   lineup: Array<Lineup>;
-  tickets: Array<{id: number; name: string; price: number}>;
+  tickets: Array<{ id: number; name: string; price: number; soldOut: boolean }>;
   url: string;
   currency: Currencies;
 };
@@ -45,12 +48,13 @@ export const EventDetail: React.FC<Props> = ({
   lineup,
   tickets,
   url,
-                                               currency
+  currency
 }) => {
   const { formattedDate, formattedTime } = getFormattedDate(startDate);
+  const [shouldShowMore, setShouldShowMore] = useState<boolean>(false);
   return (
     <EventWrapper>
-      <EventImage image={image}></EventImage>
+      <EventImage alt="image of event" image={image}></EventImage>
       <EventDataAndTime>
         {formattedDate} - {formattedTime}
       </EventDataAndTime>
@@ -60,27 +64,43 @@ export const EventDetail: React.FC<Props> = ({
         {city}, {country}
       </EventVenueLocation>
       <EventDescriptionWrapper>
-        <EventDescription dangerouslySetInnerHTML={{ __html: description }} />
-        <EventInfoTitle>LINE UP</EventInfoTitle>
-        <EventLineupOrderedList>
-          {lineup.map((artist) => (
-            <EventLineupListItem key={artist.details}>
-              {artist.details}
-            </EventLineupListItem>
-          ))}
-        </EventLineupOrderedList>
-        <EventInfoTitle>TICKETS</EventInfoTitle>
-        <EventTicketsOrderedList>
-          {tickets.map((ticket) => (
-            <EventTicketListItem key={ticket.id}>
-              {ticket.name} - <b>{getFormattedPrice(currency, ticket.price)}</b>
-            </EventTicketListItem>
-          ))}
-        </EventTicketsOrderedList>
+        <EventMoreInfo onClick={() => setShouldShowMore(shouldShowMore ? false : true)} isExpanded={shouldShowMore}>
+          <EventMoreInfoText>More info</EventMoreInfoText>
+          <EventMoreInfoText>+</EventMoreInfoText>
+        </EventMoreInfo>
+        {shouldShowMore && (
+          <>
+            <EventDescription
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
+            <EventInfoTitle>LINE UP</EventInfoTitle>
+            <EventLineupOrderedList>
+              {lineup.map((artist) => (
+                <EventLineupListItem key={artist.details}>
+                  {artist.details}
+                </EventLineupListItem>
+              ))}
+            </EventLineupOrderedList>
+            <EventInfoTitle>TICKETS</EventInfoTitle>
+            <EventTicketsOrderedList>
+              {tickets.map((ticket) => (
+                <EventTicketListItem key={ticket.id}>
+                  {ticket.name} -{' '}
+                  <b>{getFormattedPrice(currency, ticket.price)}</b>{' '}
+                  {ticket.soldOut && (
+                    <EventSoldOutText>SOLD OUT</EventSoldOutText>
+                  )}
+                </EventTicketListItem>
+              ))}
+            </EventTicketsOrderedList>{' '}
+          </>
+        )}
       </EventDescriptionWrapper>
       <EventButtonWrapper>
         <EventButtonLink href={url}>BOOK NOW</EventButtonLink>
-        <span>{tickets[0].price}</span>
+        <EventLowestTicketPriceText>
+          {getLowestPrice(tickets, currency)}
+        </EventLowestTicketPriceText>
       </EventButtonWrapper>
     </EventWrapper>
   );

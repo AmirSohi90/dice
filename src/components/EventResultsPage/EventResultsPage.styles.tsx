@@ -4,6 +4,10 @@ type EventImageProps = {
   image: string;
 };
 
+type EventMoreInfoProps = {
+  isExpanded: boolean;
+}
+
 const SearchFormWrapper = styled.div`
   //position: fixed;
   padding: 80px 0 0;
@@ -40,11 +44,17 @@ const SearchByVenueTextInput = styled.input`
   border: black solid 1px;
 `;
 
-const EventsWrapper = styled.div``;
+const EventsWrapper = styled.div`
+  padding: 16px;
+`;
 
 const EventWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 16px;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 `;
 
 const EventDataAndTime = styled.span`
@@ -128,6 +138,28 @@ const EventButtonLink = styled.a`
   padding: 12px 0;
 `;
 
+const EventSoldOutText = styled.span`
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #000000;
+  opacity: 0.5;
+`;
+
+const EventLowestTicketPriceText = styled.span`
+  font-size: 2rem;
+`;
+
+const EventMoreInfo = styled.div<EventMoreInfoProps>`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: ${({isExpanded}) => isExpanded ? `19px` : '0'};
+`
+
+const EventMoreInfoText = styled.span`
+  font-size: 1rem;
+  font-weight: bold;
+`
+
 export {
   SearchFormWrapper,
   SearchByVenueForm,
@@ -148,4 +180,8 @@ export {
   EventButtonWrapper,
   EventButtonLink,
   EventImage,
+  EventSoldOutText,
+  EventLowestTicketPriceText,
+  EventMoreInfo,
+  EventMoreInfoText
 };

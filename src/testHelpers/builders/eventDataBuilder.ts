@@ -1,4 +1,4 @@
-import { Currencies, EventData } from '../../types/EventData';
+import { Currencies, EventData, Lineup } from '../../types/EventData';
 
 export class EventDataBuilder {
   private eventData: EventData = {
@@ -60,6 +60,22 @@ export class EventDataBuilder {
     featured: false,
     url: 'https://link.dice.fm/l39c3b1d80b6',
   };
+
+  withTicketTypes(
+    ticketTypes: Array<{
+      id: number;
+      name: string;
+      price: {
+        face_value: number;
+        fees: number;
+        total: number;
+      };
+      sold_out: boolean;
+    }>
+  ): EventDataBuilder {
+    this.eventData.ticket_types = ticketTypes;
+    return this;
+  }
 
   public build() {
     return this.eventData;
