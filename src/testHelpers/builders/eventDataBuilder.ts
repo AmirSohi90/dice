@@ -1,4 +1,4 @@
-import { EventData } from '../../types/EventData';
+import { Currencies, EventData } from '../../types/EventData';
 
 export class EventDataBuilder {
   private eventData: EventData = {
@@ -42,7 +42,7 @@ export class EventDataBuilder {
       city: 'New York',
       country: 'United States',
     },
-    currency: 'USD',
+    currency: Currencies.USD,
     date: '2022-04-03T17:00:00Z',
     ticket_types: [
       {

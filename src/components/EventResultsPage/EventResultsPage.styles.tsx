@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 type EventImageProps = {
   image: string;
-}
+};
 
 const SearchFormWrapper = styled.div`
   //position: fixed;
@@ -19,14 +19,12 @@ const SearchByVenueForm = styled.form`
 `;
 
 const EventImage = styled.img<EventImageProps>`
-  background: ${props => `url(${props.image})`};
-  background-size:contain;
+  background: ${(props) => `url(${props.image})`};
   height: 160px;
   width: 100%;
-  background-position:center;
   background-size: cover;
   margin-bottom: 16px;
-`
+`;
 
 const SearchByVenueTextInput = styled.input`
   appearance: none;
@@ -101,32 +99,34 @@ const EventLineupListItem = styled.li`
   display: block;
   font-size: 1rem;
   margin-bottom: 8px;
-`
+`;
 
-const EventTicketsOrderedList = styled(EventLineupOrderedList)`margin-bottom: 0;`
+const EventTicketsOrderedList = styled(EventLineupOrderedList)`
+  margin-bottom: 0;
+`;
 
 const EventTicketListItem = styled(EventLineupListItem)`
   &:last-of-type {
     margin-bottom: 0;
   }
-`
+`;
 
 const EventButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-`
+`;
 
 const EventButtonLink = styled.a`
   display: block;
   width: 160px;
-  background-color: #3C74FF;
+  background-color: #3c74ff;
   text-decoration: none;
   color: #ffffff;
   font-weight: bold;
   text-align: center;
   font-size: 0.875rem;
   padding: 12px 0;
-`
+`;
 
 export {
   SearchFormWrapper,
@@ -147,5 +147,5 @@ export {
   EventTicketListItem,
   EventButtonWrapper,
   EventButtonLink,
-  EventImage
+  EventImage,
 };

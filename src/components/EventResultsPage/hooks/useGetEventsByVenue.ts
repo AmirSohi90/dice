@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import apis from '../../../apis/apis';
 import {
+  Currencies,
   EventData,
   Lineup,
   MusicTracks,
@@ -38,7 +39,7 @@ type EventsByVenueResponse = {
   city: string;
   country: string;
   onSaleFrom: string;
-  currency: string;
+  currency: Currencies;
   url: string;
 };
 

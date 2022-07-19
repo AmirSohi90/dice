@@ -25,6 +25,12 @@ type EventImages = {
   square: string;
 };
 
+export enum Currencies {
+  USD = "USD",
+      GBP = "GBP",
+      EUR = "EUR"
+}
+
 export type EventData = {
   apple_music_tracks: Array<MusicTracks>;
   lineup: Array<Lineup>;
@@ -39,7 +45,7 @@ export type EventData = {
   raw_description: string;
   sale_start_date: string;
   location: Location;
-  currency: string;
+  currency: Currencies;
   date: string;
   ticket_types: Array<TicketTypes>;
   venue: string;

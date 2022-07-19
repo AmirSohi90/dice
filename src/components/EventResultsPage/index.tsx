@@ -4,22 +4,10 @@ import {
   SearchByVenueForm,
   SearchByVenueTextInput,
   SearchFormWrapper,
-  EventWrapper,
-  EventDataAndTime,
-  EventName,
-  EventVenue,
-  EventVenueLocation,
-  EventDescriptionWrapper,
-  EventDescription,
-  EventInfoTitle,
-  EventLineupOrderedList, EventLineupListItem,
-  EventTicketsOrderedList,
-  EventTicketListItem,
-  EventButtonWrapper, EventButtonLink,
-  EventImage
 } from './EventResultsPage.styles';
 import { useGetEventsByVenue } from './hooks/useGetEventsByVenue';
 import { getFormattedDate } from '../../helpers/getFormattedDate';
+import { EventDetail } from './sections/EventDetail';
 
 export const EventsResultsPage = () => {
   const [venueName, setVenueName] = useState('');
@@ -43,47 +31,20 @@ export const EventsResultsPage = () => {
       </SearchFormWrapper>
       {!!venueName && <div>Your search results for {venueName}</div>}
       <EventsWrapper>
-        {newData?.map((event) => {
-          const { formattedDate, formattedTime } = getFormattedDate(
-            event.startDate
-          );
-          return (
-            <EventWrapper key={event.id}>
-              <EventImage image={event.image}>
-
-              </EventImage>
-              <EventDataAndTime>
-                {formattedDate} - {formattedTime}
-              </EventDataAndTime>
-              <EventName>{event.name}</EventName>
-              <EventVenue>{event.venue}</EventVenue>
-              <EventVenueLocation>
-                {event.city}, {event.country}
-              </EventVenueLocation>
-              <EventDescriptionWrapper>
-                <EventDescription dangerouslySetInnerHTML={{ __html: event.description }}/>
-                <EventInfoTitle>LINE UP</EventInfoTitle>
-                <EventLineupOrderedList>
-                {event.lineup.map((artist) => (
-                  <EventLineupListItem key={artist.details}>{artist.details}</EventLineupListItem>
-                ))}
-                </EventLineupOrderedList>
-                <EventInfoTitle>TICKETS</EventInfoTitle>
-                <EventTicketsOrderedList>
-                  {event.tickets.map((ticket) => (
-                    <EventTicketListItem key={ticket.id}>
-                      {ticket.name} {ticket.price}
-                    </EventTicketListItem>
-                  ))}
-                </EventTicketsOrderedList>
-              </EventDescriptionWrapper>
-              <EventButtonWrapper>
-                <EventButtonLink href={event.url}>BOOK NOW</EventButtonLink>
-                <span>{event.tickets[0].price}</span>
-              </EventButtonWrapper>
-            </EventWrapper>
-          );
-        })}
+        {newData?.map((event) =>           <EventDetail
+            key={event.id}
+            image={event.image}
+            startDate={event.startDate}
+            name={event.name}
+            venue={event.venue}
+            city={event.city}
+            country={event.country}
+            description={event.description}
+            lineup={event.lineup}
+            tickets={event.tickets}
+            url={event.url}
+            currency={event.currency}
+        />)}
       </EventsWrapper>
     </div>
   );
