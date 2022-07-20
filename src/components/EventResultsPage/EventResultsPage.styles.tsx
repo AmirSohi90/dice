@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 
 type EventImageProps = {
   image: string;
+  isExpanded: boolean;
 };
 
-type EventMoreInfoProps = {
+type EventIsExpanded = {
   isExpanded: boolean;
-}
+};
 
 const SearchFormWrapper = styled.div`
-  //position: fixed;
   padding: 80px 0 0;
   z-index: 1;
   background-color: rgb(0, 0, 0);
@@ -22,12 +22,14 @@ const SearchByVenueForm = styled.form`
   max-width: 1080px;
 `;
 
-const EventImage = styled.img<EventImageProps>`
-  background: ${(props) => `url(${props.image})`};
-  height: 160px;
+const EventImage = styled.div<EventImageProps>`
+  background: ${({ image }) => `url(${image})`};
+  height: ${({ isExpanded }) => (isExpanded ? '160px' : '320px')};
   width: 100%;
   background-size: cover;
   margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const SearchByVenueTextInput = styled.input`
@@ -149,16 +151,36 @@ const EventLowestTicketPriceText = styled.span`
   font-size: 2rem;
 `;
 
-const EventMoreInfo = styled.div<EventMoreInfoProps>`
+const EventMoreInfo = styled.div<EventIsExpanded>`
   display: flex;
   justify-content: space-between;
-  margin-bottom: ${({isExpanded}) => isExpanded ? `19px` : '0'};
-`
+  margin-bottom: ${({ isExpanded }) => (isExpanded ? `19px` : '0')};
+`;
 
 const EventMoreInfoText = styled.span`
   font-size: 1rem;
   font-weight: bold;
-`
+`;
+
+const EventTrack = styled.div<EventIsExpanded>`
+  height: 50px;
+  width: 50px;
+  background-color: #000000;
+  opacity: 0.6;
+  color: #ffffff;
+  margin-top: ${({ isExpanded }) => (isExpanded ? '110px' : '270px')};
+`;
+
+const EventFeatured = styled.span<EventIsExpanded>`
+  background-color: #3c74ff;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: bold;
+  padding: 6px 8px;
+  height: 16px;
+  margin-top: ${({ isExpanded }) => (isExpanded ? '120px' : '280px')};
+  margin-right: 16px;
+`;
 
 export {
   SearchFormWrapper,
@@ -183,5 +205,7 @@ export {
   EventSoldOutText,
   EventLowestTicketPriceText,
   EventMoreInfo,
-  EventMoreInfoText
+  EventMoreInfoText,
+  EventTrack,
+  EventFeatured,
 };

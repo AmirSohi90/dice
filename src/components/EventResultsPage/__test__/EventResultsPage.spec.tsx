@@ -6,7 +6,6 @@ import { EventDataBuilder } from '../../../testHelpers/builders/eventDataBuilder
 import { withProviders } from '../../../testHelpers/withProviders';
 import { EventsResultsPage } from '../index';
 import userEvent from '@testing-library/user-event';
-import { wait } from "@testing-library/user-event/dist/utils";
 
 const data: EventData = new EventDataBuilder().build();
 
@@ -35,9 +34,10 @@ describe('[EventsResultsPage]', () => {
   });
 
   it('should render the search results', async () => {
-    jest
-      .spyOn(apis, 'getEventsByVenue')
-      .mockResolvedValueOnce({ data: [data], links: { self: 'link' } });
+    jest.spyOn(apis, 'getEventsByVenue').mockResolvedValueOnce({
+      data: [data],
+      links: { self: 'link' },
+    });
 
     render(withProviders(<EventsResultsPage />));
 
@@ -49,11 +49,11 @@ describe('[EventsResultsPage]', () => {
     await userEvent.type(input, 'Valid search result');
 
     await waitFor(() => {
-      const moreInfoText = screen.getByText(/more info/i)
-      expect(moreInfoText).toBeInTheDocument()
-    })
+      const moreInfoText = screen.getByText(/more info/i);
+      expect(moreInfoText).toBeInTheDocument();
+    });
 
-    userEvent.click(screen.getByText(/more info/i))
+    userEvent.click(screen.getByText(/more info/i));
 
     await waitFor(() => {
       expect(screen.getByText(new RegExp(data.name))).toBeInTheDocument();
@@ -94,12 +94,10 @@ describe('[EventsResultsPage]', () => {
       .withTicketTypes([soldOutTicket])
       .build();
 
-    jest
-      .spyOn(apis, 'getEventsByVenue')
-      .mockResolvedValueOnce({
-        data: [dataWithSoldOutTicket],
-        links: { self: 'link' },
-      });
+    jest.spyOn(apis, 'getEventsByVenue').mockResolvedValueOnce({
+      data: [dataWithSoldOutTicket],
+      links: { self: 'link' },
+    });
 
     render(withProviders(<EventsResultsPage />));
 
@@ -111,11 +109,11 @@ describe('[EventsResultsPage]', () => {
     await userEvent.type(input, 'Valid search result');
 
     await waitFor(() => {
-      const moreInfoText = screen.getByText(/more info/i)
-      expect(moreInfoText).toBeInTheDocument()
-    })
+      const moreInfoText = screen.getByText(/more info/i);
+      expect(moreInfoText).toBeInTheDocument();
+    });
 
-    userEvent.click(screen.getByText(/more info/i))
+    userEvent.click(screen.getByText(/more info/i));
 
     await waitFor(() => {
       expect(screen.getByText(/sold out/i)).toBeInTheDocument();
@@ -149,12 +147,10 @@ describe('[EventsResultsPage]', () => {
       .withTicketTypes([ticket1, ticket2])
       .build();
 
-    jest
-      .spyOn(apis, 'getEventsByVenue')
-      .mockResolvedValueOnce({
-        data: [dataWithMultipleTickets],
-        links: { self: 'link' },
-      });
+    jest.spyOn(apis, 'getEventsByVenue').mockResolvedValueOnce({
+      data: [dataWithMultipleTickets],
+      links: { self: 'link' },
+    });
 
     render(withProviders(<EventsResultsPage />));
 
@@ -162,11 +158,11 @@ describe('[EventsResultsPage]', () => {
     await userEvent.type(input, 'Valid search result');
 
     await waitFor(() => {
-      const moreInfoText = screen.getByText(/more info/i)
-      expect(moreInfoText).toBeInTheDocument()
+      const moreInfoText = screen.getByText(/more info/i);
+      expect(moreInfoText).toBeInTheDocument();
     });
 
-    userEvent.click(screen.getByText(/more info/i))
+    userEvent.click(screen.getByText(/more info/i));
 
     await waitFor(() => {
       expect(screen.getAllByText('$25')[1]).toBeInTheDocument();

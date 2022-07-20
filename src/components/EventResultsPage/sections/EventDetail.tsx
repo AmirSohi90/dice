@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   EventButtonLink,
   EventButtonWrapper,
   EventDataAndTime,
   EventDescription,
   EventDescriptionWrapper,
+  EventFeatured,
   EventImage,
   EventInfoTitle,
   EventLineupListItem,
   EventLineupOrderedList,
-  EventLowestTicketPriceText, EventMoreInfo, EventMoreInfoText,
+  EventLowestTicketPriceText,
+  EventMoreInfo,
+  EventMoreInfoText,
   EventName,
   EventSoldOutText,
   EventTicketListItem,
   EventTicketsOrderedList,
+  EventTrack,
   EventVenue,
   EventVenueLocation,
   EventWrapper,
@@ -32,9 +36,18 @@ type Props = {
   country: string;
   description: string;
   lineup: Array<Lineup>;
-  tickets: Array<{ id: number; name: string; price: number; soldOut: boolean }>;
+  tickets: Array<{
+    id: number;
+    name: string;
+    price: number;
+    soldOut: boolean;
+  }>;
   url: string;
+  previewTrack: string | null;
   currency: Currencies;
+  isFeatured: boolean;
+  onSaleDate: string;
+  index: number;
 };
 
 export const EventDetail: React.FC<Props> = ({
@@ -48,13 +61,61 @@ export const EventDetail: React.FC<Props> = ({
   lineup,
   tickets,
   url,
-  currency
+  currency,
+  previewTrack,
+  isFeatured,
+  onSaleDate,
+  index,
 }) => {
   const { formattedDate, formattedTime } = getFormattedDate(startDate);
   const [shouldShowMore, setShouldShowMore] = useState<boolean>(false);
+  const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
+
+  const audioElement = new Audio(previewTrack || '');
+
+  const ImageTextToRender = () => {
+    const currentDate = new Date();
+    const onSaleFrom = new Date(onSaleDate);
+    if (isFeatured)
+      return (
+        <EventFeatured isExpanded={shouldShowMore}>FEATURED</EventFeatured>
+      );
+    if (onSaleFrom > currentDate) {
+      return (
+        <div>On Sale from {getFormattedDate(onSaleDate).formattedDate}</div>
+      );
+    }
+    return null;
+  };
+
+  const onPlay = () => {
+    setIsPlayingAudio(true);
+    audioElement.play();
+  };
+
+  const onPause = () => {
+    setIsPlayingAudio(false);
+    audioElement.pause();
+  };
+
   return (
     <EventWrapper>
-      <EventImage alt="image of event" image={image}></EventImage>
+      <EventImage isExpanded={shouldShowMore} image={image}>
+        {previewTrack && (
+          <>
+            {!isPlayingAudio ? (
+              <EventTrack isExpanded={shouldShowMore} onClick={onPlay}>
+                Play
+              </EventTrack>
+            ) : (
+              <EventTrack isExpanded={shouldShowMore} onClick={onPause}>
+                Pause
+              </EventTrack>
+            )}
+          </>
+        )}
+        <ImageTextToRender />
+      </EventImage>
       <EventDataAndTime>
         {formattedDate} - {formattedTime}
       </EventDataAndTime>
@@ -64,7 +125,10 @@ export const EventDetail: React.FC<Props> = ({
         {city}, {country}
       </EventVenueLocation>
       <EventDescriptionWrapper>
-        <EventMoreInfo onClick={() => setShouldShowMore(shouldShowMore ? false : true)} isExpanded={shouldShowMore}>
+        <EventMoreInfo
+          onClick={() => setShouldShowMore(shouldShowMore ? false : true)}
+          isExpanded={shouldShowMore}
+        >
           <EventMoreInfoText>More info</EventMoreInfoText>
           <EventMoreInfoText>+</EventMoreInfoText>
         </EventMoreInfo>

@@ -12,9 +12,10 @@ describe('[useGetEventsByVenue]', () => {
   afterEach(() => jest.resetAllMocks());
 
   it('should return a list of formatted event data', async () => {
-    jest
-      .spyOn(apis, 'getEventsByVenue')
-      .mockResolvedValueOnce({ data: [data], links: { self: 'link' } });
+    jest.spyOn(apis, 'getEventsByVenue').mockResolvedValueOnce({
+      data: [data],
+      links: { self: 'link' },
+    });
 
     const { result } = renderHookWithProviders(() =>
       useGetEventsByVenue('test-venue')
@@ -88,9 +89,10 @@ describe('[useGetEventsByVenue]', () => {
   });
 
   it('should return an SUCCESS status if there is no venue found', async () => {
-    jest
-      .spyOn(apis, 'getEventsByVenue')
-      .mockResolvedValueOnce({ data: [], links: { self: 'link' } });
+    jest.spyOn(apis, 'getEventsByVenue').mockResolvedValueOnce({
+      data: [],
+      links: { self: 'link' },
+    });
     const { result } = renderHookWithProviders(() =>
       useGetEventsByVenue('NOT FOUND')
     );

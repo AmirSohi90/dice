@@ -7,9 +7,7 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <header>
-        <p>hello</p>
-      </header>
+      <header></header>
       <EventsResultsPage />
     </QueryClientProvider>
   );

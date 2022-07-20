@@ -27,7 +27,7 @@ export const EventsResultsPage: React.FC = () => {
       </SearchFormWrapper>
       {!!venueName && <div>Your search results for {venueName}</div>}
       <EventsWrapper>
-        {data?.map((event) => (
+        {data?.map((event, index) => (
           <EventDetail
             key={event.id}
             image={event.image}
@@ -41,9 +41,14 @@ export const EventsResultsPage: React.FC = () => {
             tickets={event.tickets}
             url={event.url}
             currency={event.currency}
+            previewTrack={event.previewTrack}
+            isFeatured={event.isFeatured}
+            onSaleDate={event.onSaleFrom}
+            index={index}
           />
         ))}
       </EventsWrapper>
+      {/*<button onClick={setEndpoint} />*/}
     </div>
   );
 };
