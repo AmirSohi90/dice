@@ -1,5 +1,4 @@
 export enum ResponseStatus {
-  IDLE = 'IDLE',
   LOADING = 'LOADING',
   SUCCESS = 'SUCCESS',
   NO_DATA = 'NO_DATA',
@@ -29,15 +28,12 @@ const isHttpError = (error: unknown): error is HTTPError => {
 };
 
 export const calculateResponseStatus = (
-  queryInformation: QueryInformation,
-  key?: string
+  isLoading: boolean,
+  error: HTTPError | null
 ): ResponseStatus => {
-  const { status, error } = queryInformation;
-  if (typeof key === 'string' && !key) return ResponseStatus.IDLE;
-  if (status === 'idle') return ResponseStatus.IDLE;
   if (isHttpError(error) && error.statusCode === 404)
     return ResponseStatus.NO_DATA;
-  if (status === 'success') return ResponseStatus.SUCCESS;
-  if (status === 'loading') return ResponseStatus.LOADING;
-  return ResponseStatus.ERROR;
+  if(error) return ResponseStatus.ERROR;
+  if (isLoading) return ResponseStatus.LOADING;
+  return ResponseStatus.SUCCESS;
 };

@@ -10,7 +10,7 @@ type GetEventsByVenueResponse = {
   hasNextPage: boolean;
   setPageNumber: Dispatch<SetStateAction<number>>;
   pageNumber: number;
-  isLoading: boolean;
+  responseStatus: ResponseStatus
 };
 
 export type EventsByVenueResponse = {
@@ -93,6 +93,7 @@ export const useGetEventsByVenue = (
   const [pageNumber, setPageNumber] = useState(1)
   const [hasNextPage, setHasNextPage] = useState(false);
   const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [eventData, setData] = useState<Array<EventsByVenueResponse>>([])
 
   useEffect(() => {
@@ -110,15 +111,19 @@ export const useGetEventsByVenue = (
           setData(concatenatedData);
         }
         setHasNextPage(res.links.next ? true : false)
-      }).then(() => setLoading(false)).catch((err) => console.log(err))
+      }).catch((err) => {
+        setError(err)
+      }).finally(() => setLoading(false));
     }
   }, [debouncedValue, pageNumber])
+
+  const responseStatus = calculateResponseStatus(isLoading, error)
 
   return {
     eventData,
     hasNextPage,
     setPageNumber,
-    pageNumber,
-    isLoading,
+    responseStatus,
+    pageNumber
   }
 };
