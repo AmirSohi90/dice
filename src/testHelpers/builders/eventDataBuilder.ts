@@ -1,4 +1,4 @@
-import { EventData } from '../../types/EventData';
+import { Currencies, EventData, Lineup } from '../../types/EventData';
 
 export class EventDataBuilder {
   private eventData: EventData = {
@@ -16,6 +16,7 @@ export class EventDataBuilder {
     sold_out: false,
     status: 'off-sale',
     name: 'DURATIONS: Season pass',
+    raw_description: 'test description',
     event_images: {
       brand: null,
       landscape:
@@ -41,7 +42,7 @@ export class EventDataBuilder {
       city: 'New York',
       country: 'United States',
     },
-    currency: 'USD',
+    currency: Currencies.USD,
     date: '2022-04-03T17:00:00Z',
     ticket_types: [
       {
@@ -55,10 +56,26 @@ export class EventDataBuilder {
         sold_out: false,
       },
     ],
-    venue: 'Public Records',
+    venue: 'Test Venue',
     featured: false,
     url: 'https://link.dice.fm/l39c3b1d80b6',
   };
+
+  withTicketTypes(
+    ticketTypes: Array<{
+      id: number;
+      name: string;
+      price: {
+        face_value: number;
+        fees: number;
+        total: number;
+      };
+      sold_out: boolean;
+    }>
+  ): EventDataBuilder {
+    this.eventData.ticket_types = ticketTypes;
+    return this;
+  }
 
   public build() {
     return this.eventData;

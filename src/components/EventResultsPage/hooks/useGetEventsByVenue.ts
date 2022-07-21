@@ -1,22 +1,19 @@
 import { useQuery } from 'react-query';
 import apis from '../../../apis/apis';
-import {
-  EventData,
-  Lineup,
-  MusicTracks,
-  TicketTypes,
-} from '../../../types/EventData';
-import {
-  calculateResponseStatus,
-  ResponseStatus,
-} from './calculateResponseStatus';
+import { Currencies, EventData, Lineup, MusicTracks, TicketTypes, } from '../../../types/EventData';
+import { calculateResponseStatus, ResponseStatus, } from './calculateResponseStatus';
+import { useDebouncedValue } from './useDebounceValue';
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 type GetEventsByVenueResponse = {
-  data: Array<EventsByVenueResponse> | undefined;
-  responseStatus: ResponseStatus;
+  eventData: Array<EventsByVenueResponse>;
+  hasNextPage: boolean;
+  setPageNumber: Dispatch<SetStateAction<number>>;
+  pageNumber: number;
+  responseStatus: ResponseStatus
 };
 
-type EventsByVenueResponse = {
+export type EventsByVenueResponse = {
   id: string;
   previewTrack: string | null;
   name: string;
@@ -37,7 +34,7 @@ type EventsByVenueResponse = {
   city: string;
   country: string;
   onSaleFrom: string;
-  currency: string;
+  currency: Currencies;
   url: string;
 };
 
@@ -67,17 +64,17 @@ const getTicketData = (tickets: Array<TicketTypes>) =>
     soldOut: sold_out,
   }));
 
-const mapEventData = (event: EventData): EventsByVenueResponse => ({
+export const mapEventData = (event: EventData): EventsByVenueResponse => ({
   id: event.id,
   name: event.name,
-  description: event.description,
+  description: event.raw_description,
   isFeatured: event.featured,
   isSoldOut: event.sold_out,
   venue: event.venue,
-  city: event.location.city,
-  country: event.location.country,
+  city: event.location?.city || "",
+  country: event.location?.country || "",
   url: event.url,
-  image: event.event_images.square,
+  image: event.event_images?.square || "",
   currency: event.currency,
   lineup: mapLineUp(event.lineup),
   startTime: getStartTime(event.lineup),
@@ -87,26 +84,46 @@ const mapEventData = (event: EventData): EventsByVenueResponse => ({
   onSaleFrom: event.sale_start_date,
 });
 
+// TODO sort out loading, then sort out errors, map them to a status
+
 export const useGetEventsByVenue = (
-  venueName: string
+  venueName: string,
 ): GetEventsByVenueResponse => {
-  const queryKey = `venueName:${venueName}`;
-  const options = { enabled: !!venueName };
-  const queryResult = useQuery(
-    queryKey,
-    () => apis.getEventsByVenue(venueName),
-    options
-  );
+  const debouncedValue = useDebouncedValue(venueName);
+  const [pageNumber, setPageNumber] = useState(1)
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [eventData, setData] = useState<Array<EventsByVenueResponse>>([])
 
-  const { data } = queryResult;
+  useEffect(() => {
+      setData([]);
+      setPageNumber(1);
+  }, [venueName])
 
-  const responseStatus = calculateResponseStatus(queryResult, venueName);
+  useEffect(() => {
+    if(debouncedValue) {
+      setLoading(true)
+      apis.getEventsByVenue(debouncedValue, pageNumber).then(res => {
+        if(res.data.length) {
+          const mappedEventData = res.data.map(mapEventData)
+          const concatenatedData = [...eventData, ...mappedEventData]
+          setData(concatenatedData);
+        }
+        setHasNextPage(res.links.next ? true : false)
+      }).catch((err) => {
+        setError(err)
+      }).finally(() => setLoading(false));
+    }
+  }, [debouncedValue, pageNumber])
+
+  const responseStatus = calculateResponseStatus(isLoading, error)
 
   return {
-    data:
-      data && !!data.data.length
-        ? data.data.map((event: EventData) => mapEventData(event))
-        : undefined,
+    eventData,
+    hasNextPage,
+    setPageNumber,
     responseStatus,
-  };
+    pageNumber
+  }
 };

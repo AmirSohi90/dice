@@ -8,7 +8,8 @@ export const getFormattedDate = (date: string) => {
   const dateOfEvent = constructedDate.getDate();
   const month = MONTHS[constructedDate.getMonth()];
   const hours = constructedDate.getHours();
-  const minutes = constructedDate.getMinutes();
+  const minutes =
+    constructedDate.getMinutes() === 0 ? '00' : constructedDate.getMinutes();
 
   return {
     formattedDate: `${dayOfWeek} ${dateOfEvent} ${month}`,
