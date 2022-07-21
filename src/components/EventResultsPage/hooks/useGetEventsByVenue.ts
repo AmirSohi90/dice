@@ -95,8 +95,6 @@ export const useGetEventsByVenue = (
   const [isLoading, setLoading] = useState(false)
   const [eventData, setData] = useState<Array<EventsByVenueResponse>>([])
 
-  console.log(venueName);
-
   useEffect(() => {
       setData([]);
       setPageNumber(1);
