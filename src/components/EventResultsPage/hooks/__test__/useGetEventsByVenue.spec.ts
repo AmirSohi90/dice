@@ -3,7 +3,7 @@ import apis from '../../../../apis/apis';
 import { EventData } from '../../../../types/EventData';
 import { useGetEventsByVenue } from '../useGetEventsByVenue';
 import { EventDataBuilder } from '../../../../testHelpers/builders/eventDataBuilder';
-import { ResponseStatus } from "../../hooks/calculateResponseStatus";
+import { ResponseStatus } from '../../hooks/calculateResponseStatus';
 
 const data: EventData = new EventDataBuilder().build();
 
@@ -39,12 +39,12 @@ const mappedData = [
     currency: data.currency,
     url: data.url,
   },
-]
+];
 
 describe('[useGetEventsByVenue]', () => {
   beforeEach(() => {
-    jest.resetModules()
-  })
+    jest.resetModules();
+  });
 
   afterEach(() => jest.resetAllMocks());
 
@@ -54,7 +54,7 @@ describe('[useGetEventsByVenue]', () => {
       links: { self: 'link' },
     });
 
-    const {result} = renderHook(() => useGetEventsByVenue('test-venue'))
+    const { result } = renderHook(() => useGetEventsByVenue('test-venue'));
 
     await waitFor(() => {
       expect(apis.getEventsByVenue).toHaveBeenCalledTimes(1);
@@ -68,21 +68,20 @@ describe('[useGetEventsByVenue]', () => {
       links: { self: 'link' },
     });
 
-    const { result } = renderHook(() =>
-      useGetEventsByVenue('test-venue')
-    );
+    const { result } = renderHook(() => useGetEventsByVenue('test-venue'));
 
-      expect(result.current.responseStatus).toEqual(ResponseStatus.LOADING)
+    expect(result.current.responseStatus).toEqual(ResponseStatus.LOADING);
   });
 
   it('should return an ERROR status if API fails', async () => {
-    jest.spyOn(apis, 'getEventsByVenue').mockReturnValueOnce(Promise.reject(new Error('Error message')))
+    jest
+      .spyOn(apis, 'getEventsByVenue')
+      .mockReturnValueOnce(Promise.reject(new Error('Error message')));
 
-    const { result } = renderHook(() =>
-        useGetEventsByVenue('test-venue')
-    );
+    const { result } = renderHook(() => useGetEventsByVenue('test-venue'));
 
     await waitFor(() => {
-      expect(result.current.responseStatus).toEqual(ResponseStatus.ERROR)})
+      expect(result.current.responseStatus).toEqual(ResponseStatus.ERROR);
+    });
   });
 });

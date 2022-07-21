@@ -6,25 +6,28 @@ import {
   SearchFormWrapper,
 } from './EventResultsPage.styles';
 import { EventDetail } from './sections/EventDetail';
-import {  useGetEventsByVenue } from "./hooks/useGetEventsByVenue";
+import { useGetEventsByVenue } from './hooks/useGetEventsByVenue';
+import { SearchForm } from "./sections/SearchForm";
 
 export const EventsResultsPage: React.FC = () => {
   const [venueName, setVenueName] = useState('');
-  const {eventData, setPageNumber, hasNextPage, pageNumber} = useGetEventsByVenue(venueName)
+  const { eventData, setPageNumber, hasNextPage, pageNumber } =
+    useGetEventsByVenue(venueName);
 
-    return (
+  return (
     <div>
-      <SearchFormWrapper>
-        <SearchByVenueForm onSubmit={(e) => e.preventDefault()}>
-          <SearchByVenueTextInput
-            type="search"
-            name="Search"
-            placeholder="Search for an event by venue"
-            value={venueName}
-            onChange={(event) => setVenueName(event.target.value)}
-          />
-        </SearchByVenueForm>
-      </SearchFormWrapper>
+        <SearchForm venueName={venueName} setVenueName={setVenueName} />
+      {/*<SearchFormWrapper>*/}
+      {/*  <SearchByVenueForm onSubmit={(e) => e.preventDefault()}>*/}
+      {/*    <SearchByVenueTextInput*/}
+      {/*      type="search"*/}
+      {/*      name="Search"*/}
+      {/*      placeholder="Search for an event by venue"*/}
+      {/*      value={venueName}*/}
+      {/*      onChange={(event) => setVenueName(event.target.value)}*/}
+      {/*    />*/}
+      {/*  </SearchByVenueForm>*/}
+      {/*</SearchFormWrapper>*/}
       {!!venueName && <div>Your search results for {venueName}</div>}
       <EventsWrapper>
         {eventData?.map((event, index) => (
@@ -48,7 +51,7 @@ export const EventsResultsPage: React.FC = () => {
           />
         ))}
       </EventsWrapper>
-        {hasNextPage && <button onClick={() => setPageNumber(pageNumber + 1)}/>}
+      {hasNextPage && <button onClick={() => setPageNumber(pageNumber + 1)} />}
     </div>
   );
 };
