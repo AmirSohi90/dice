@@ -22,20 +22,23 @@ padding: 12px 0;
 `;
 
 const SearchFormWrapper = styled.div`
-  padding: 80px 5% 0;
+  padding: 80px 0 0;
   z-index: 1;
   background-color: ${colours.black};
+  position: fixed;
+  width: 100%;
   display: flex;
   justify-content: center;
-
-  @media screen and (min-width: ${breakPoints.tablet}) {
-    padding: 80px 10% 0;
-  }
 `;
 
 const SearchByVenueForm = styled.form`
   width: 100%;
   max-width: 1080px;
+  padding: 0 5%;
+
+  @media screen and (min-width: ${breakPoints.tablet}) {
+    padding: 0 5%;
+  }
 `;
 
 const EventImageWrapper = styled.div<EventImageProps>`
@@ -59,6 +62,10 @@ const SearchByVenueTextInput = styled.input`
   outline: none;
   border: ${colours.black} solid 1px;
 `;
+
+const EventsListWrapper = styled.div`
+  padding-top: 126px;
+`
 
 const EventsWrapper = styled.div`
   padding: 16px 5%;
@@ -236,6 +243,7 @@ export {
   SearchFormWrapper,
   SearchByVenueForm,
   SearchByVenueTextInput,
+  EventsListWrapper,
   EventsWrapper,
   EventWrapper,
   EventDataAndTime,

@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  EventSearchResultsTitleWrapper,
-  EventsWrapper,
-  EventSearchResultsText,
+    EventSearchResultsTitleWrapper,
+    EventsWrapper,
+    EventSearchResultsText, EventsListWrapper,
 } from '../EventResultsPage.styles';
 import { EventDetail } from './EventDetail';
 import { EventsByVenueResponse } from '../hooks/useGetEventsByVenue';
@@ -14,7 +14,7 @@ type Props = {
 
 export const EventsList: React.FC<Props> = ({ events, venueName }) => {
   return (
-    <>
+    <EventsListWrapper>
       {!!venueName && (
         <EventSearchResultsTitleWrapper>
           <EventSearchResultsText>
@@ -27,6 +27,6 @@ export const EventsList: React.FC<Props> = ({ events, venueName }) => {
           <EventDetail {...event} />
         ))}
       </EventsWrapper>
-    </>
+    </EventsListWrapper>
   );
 };
