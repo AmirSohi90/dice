@@ -2,10 +2,7 @@ import { waitFor, renderHook } from '@testing-library/react';
 import apis from '../../../../apis/apis';
 import { EventData } from '../../../../types/EventData';
 import { useGetEventsByVenue } from '../useGetEventsByVenue';
-import { renderHookWithProviders } from '../../../../testHelpers/renderHookWithProviders';
 import { EventDataBuilder } from '../../../../testHelpers/builders/eventDataBuilder';
-import { ResponseStatus } from '../calculateResponseStatus';
-import exp from "constants";
 
 const data: EventData = new EventDataBuilder().build();
 
@@ -65,15 +62,15 @@ describe('[useGetEventsByVenue]', () => {
   });
 
   it('should return a LOADING status if API has not responded yet', async () => {
-    jest.spyOn(apis, 'getEventsByVenue').mockReturnValue(Promise.resolve());
+    jest.spyOn(apis, 'getEventsByVenue').mockResolvedValueOnce({
+      data: [data],
+      links: { self: 'link' },
+    });
 
     const { result } = renderHook(() =>
       useGetEventsByVenue('test-venue')
     );
 
-    await waitFor(() => {
-      expect(result.current.eventData).toEqual([]);
       expect(result.current.isLoading).toEqual(true)
-    });
   });
 });
