@@ -14,7 +14,7 @@ describe('[EventsResultsPage]', () => {
   it('should display what what term the user has searched for', async () => {
     render(<EventsResultsPage />);
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('searchbox');
     await userEvent.type(input, data.venue);
 
     await waitFor(() => {
@@ -44,7 +44,7 @@ describe('[EventsResultsPage]', () => {
       expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
     });
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('searchbox');
     await userEvent.type(input, 'Valid search result');
 
     await waitFor(() => {
@@ -104,7 +104,7 @@ describe('[EventsResultsPage]', () => {
       expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
     });
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('searchbox');
     await userEvent.type(input, 'Valid search result');
 
     await waitFor(() => {
@@ -153,7 +153,7 @@ describe('[EventsResultsPage]', () => {
 
     render(<EventsResultsPage />);
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('searchbox');
     await userEvent.type(input, 'Valid search result');
 
     await waitFor(() => {

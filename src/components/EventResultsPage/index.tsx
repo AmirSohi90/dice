@@ -15,9 +15,9 @@ export const EventsResultsPage: React.FC = () => {
     return (
     <div>
       <SearchFormWrapper>
-        <SearchByVenueForm>
+        <SearchByVenueForm onSubmit={(e) => e.preventDefault()}>
           <SearchByVenueTextInput
-            type="text"
+            type="search"
             name="Search"
             placeholder="Search for an event by venue"
             value={venueName}
