@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { EventImageWrapper, EventWrapper } from '../EventResultsPage.styles';
+import React, { useState } from 'react';
+import { EventWrapper } from '../EventResultsPage.styles';
 import { Currencies, Lineup } from '../../../types/EventData';
-import { PreviewTrack } from './PreviewTrack';
-import { ImageTextToRender } from './ImageTextToRender';
 import { EventDescription } from './EventDescription';
 import { BookNow } from './BookNow';
 import { EventTimeAndVenue } from './EventTimeAndVenue';

@@ -184,6 +184,9 @@ const EventTrack = styled.div<EventIsExpanded>`
   opacity: 0.6;
   color: ${colours.white};
   margin-top: ${({ isExpanded }) => (isExpanded ? '110px' : '270px')};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const EventFeatured = styled.span<EventIsExpanded>`
