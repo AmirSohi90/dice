@@ -1,31 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import {
-  EventButtonLink,
-  EventButtonWrapper,
-  EventDataAndTime,
-  EventDescription,
-  EventDescriptionWrapper,
-  EventFeatured,
-  EventImage,
-  EventInfoTitle,
-  EventLineupListItem,
-  EventLineupOrderedList,
-  EventLowestTicketPriceText,
-  EventMoreInfo,
-  EventMoreInfoText,
-  EventName,
-  EventSoldOutText,
-  EventTicketListItem,
-  EventTicketsOrderedList,
-  EventTrack,
-  EventVenue,
-  EventVenueLocation,
-  EventWrapper,
-} from '../EventResultsPage.styles';
+import React, { useState } from 'react';
+import { EventWrapper } from '../EventResultsPage.styles';
 import { Currencies, Lineup } from '../../../types/EventData';
-import { getFormattedDate } from '../../../helpers/getFormattedDate';
-import { getFormattedPrice } from '../../../helpers/getFormattedPrice';
-import { getLowestPrice } from '../../../helpers/getLowestPrice';
+import { EventDescription } from './EventDescription';
+import { BookNow } from './BookNow';
+import { EventTimeAndVenue } from './EventTimeAndVenue';
+import { Ticket } from '../hooks/useGetEventsByVenue';
+import { EventImage } from './EventImage';
 
 type Props = {
   image: string;
@@ -36,18 +16,12 @@ type Props = {
   country: string;
   description: string;
   lineup: Array<Lineup>;
-  tickets: Array<{
-    id: number;
-    name: string;
-    price: number;
-    soldOut: boolean;
-  }>;
+  tickets: Array<Ticket>;
   url: string;
-  previewTrack: string | null;
+  previewTrack: string;
   currency: Currencies;
   isFeatured: boolean;
-  onSaleDate: string;
-  index: number;
+  onSaleFrom: string;
 };
 
 export const EventDetail: React.FC<Props> = ({
@@ -64,108 +38,44 @@ export const EventDetail: React.FC<Props> = ({
   currency,
   previewTrack,
   isFeatured,
-  onSaleDate,
-  index,
+  onSaleFrom,
 }) => {
-  const { formattedDate, formattedTime } = getFormattedDate(startDate);
   const [shouldShowMore, setShouldShowMore] = useState<boolean>(false);
-  const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
-
-  const audioElement = new Audio(previewTrack || '');
-
-  const ImageTextToRender = () => {
-    const currentDate = new Date();
-    const onSaleFrom = new Date(onSaleDate);
-    if (isFeatured)
-      return (
-        <EventFeatured isExpanded={shouldShowMore}>FEATURED</EventFeatured>
-      );
-    if (onSaleFrom > currentDate) {
-      return (
-        <div>On Sale from {getFormattedDate(onSaleDate).formattedDate}</div>
-      );
-    }
-    return null;
-  };
-
-  const onPlay = () => {
-    setIsPlayingAudio(true);
-    audioElement.play();
-  };
-
-  const onPause = () => {
-    setIsPlayingAudio(false);
-    audioElement.pause();
-  };
+  const currentDate = new Date();
+  const onSaleDate = new Date(onSaleFrom);
+  const isOnSaleNow = onSaleDate < currentDate;
 
   return (
     <EventWrapper>
-      <EventImage isExpanded={shouldShowMore} image={image}>
-        {previewTrack && (
-          <>
-            {!isPlayingAudio ? (
-              <EventTrack isExpanded={shouldShowMore} onClick={onPlay}>
-                Play
-              </EventTrack>
-            ) : (
-              <EventTrack isExpanded={shouldShowMore} onClick={onPause}>
-                Pause
-              </EventTrack>
-            )}
-          </>
-        )}
-        <ImageTextToRender />
-      </EventImage>
-      <EventDataAndTime>
-        {formattedDate} - {formattedTime}
-      </EventDataAndTime>
-      <EventName>{name}</EventName>
-      <EventVenue>{venue}</EventVenue>
-      <EventVenueLocation>
-        {city}, {country}
-      </EventVenueLocation>
-      <EventDescriptionWrapper>
-        <EventMoreInfo
-          onClick={() => setShouldShowMore(shouldShowMore ? false : true)}
-          isExpanded={shouldShowMore}
-        >
-          <EventMoreInfoText>More info</EventMoreInfoText>
-          <EventMoreInfoText>+</EventMoreInfoText>
-        </EventMoreInfo>
-        {shouldShowMore && (
-          <>
-            <EventDescription
-              dangerouslySetInnerHTML={{ __html: description }}
-            />
-            <EventInfoTitle>LINE UP</EventInfoTitle>
-            <EventLineupOrderedList>
-              {lineup.map((artist) => (
-                <EventLineupListItem key={artist.details}>
-                  {artist.details}
-                </EventLineupListItem>
-              ))}
-            </EventLineupOrderedList>
-            <EventInfoTitle>TICKETS</EventInfoTitle>
-            <EventTicketsOrderedList>
-              {tickets.map((ticket) => (
-                <EventTicketListItem key={ticket.id}>
-                  {ticket.name} -{' '}
-                  <b>{getFormattedPrice(currency, ticket.price)}</b>{' '}
-                  {ticket.soldOut && (
-                    <EventSoldOutText>SOLD OUT</EventSoldOutText>
-                  )}
-                </EventTicketListItem>
-              ))}
-            </EventTicketsOrderedList>{' '}
-          </>
-        )}
-      </EventDescriptionWrapper>
-      <EventButtonWrapper>
-        <EventButtonLink href={url}>BOOK NOW</EventButtonLink>
-        <EventLowestTicketPriceText>
-          {getLowestPrice(tickets, currency)}
-        </EventLowestTicketPriceText>
-      </EventButtonWrapper>
+      <EventImage
+        image={image}
+        shouldShowMore={shouldShowMore}
+        onSaleFrom={onSaleFrom}
+        isFeatured={isFeatured}
+        previewTrack={previewTrack}
+        isOnSaleNow={isOnSaleNow}
+      />
+      <EventTimeAndVenue
+        venue={venue}
+        country={country}
+        startDate={startDate}
+        name={name}
+        city={city}
+      />
+      <EventDescription
+        description={description}
+        shouldShowMore={shouldShowMore}
+        setShouldShowMore={setShouldShowMore}
+        currency={currency}
+        tickets={tickets}
+        lineup={lineup}
+      />
+      <BookNow
+        isOnSaleNow={isOnSaleNow}
+        tickets={tickets}
+        currency={currency}
+        url={url}
+      />
     </EventWrapper>
   );
 };

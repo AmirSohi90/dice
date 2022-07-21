@@ -5,11 +5,6 @@ export enum ResponseStatus {
   ERROR = 'ERROR',
 }
 
-export interface QueryInformation {
-  status: 'error' | 'idle' | 'loading' | 'success';
-  error: unknown;
-}
-
 export class HTTPError extends Error {
   readonly statusCode: number;
 
@@ -33,7 +28,7 @@ export const calculateResponseStatus = (
 ): ResponseStatus => {
   if (isHttpError(error) && error.statusCode === 404)
     return ResponseStatus.NO_DATA;
-  if(error) return ResponseStatus.ERROR;
+  if (error) return ResponseStatus.ERROR;
   if (isLoading) return ResponseStatus.LOADING;
   return ResponseStatus.SUCCESS;
 };

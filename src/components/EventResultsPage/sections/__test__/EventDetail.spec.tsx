@@ -1,4 +1,4 @@
-import { render, waitFor, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { EventDetail } from '../EventDetail';
 import { Currencies } from '../../../../types/EventData';
 import userEvent from '@testing-library/user-event';
@@ -15,8 +15,8 @@ const initialProps = {
   tickets: [],
   url: 'test-url',
   currency: Currencies.USD,
-  previewTrack: null,
-  onSaleDate: 'onsale',
+  previewTrack: '',
+  onSaleFrom: 'onsale',
   isFeatured: false,
   index: 0,
 };

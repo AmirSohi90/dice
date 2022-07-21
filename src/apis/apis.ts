@@ -10,7 +10,7 @@ const getEventsByVenue = async (
   pageNumber: number
 ): Promise<EventsByVenueResponseData> => {
   const res = await fetch(
-      `https://events-api.dice.fm/v1/events?page[size]=12&filters[venue]=${venueName}&page[number]=${pageNumber}`,
+    `https://events-api.dice.fm/v1/events?page[size]=12&filters[venue]=${venueName}&page[number]=${pageNumber}`,
     {
       method: 'GET',
       headers: {

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { breakPoints, colours } from '../../helpers/styles';
 
 type EventImageProps = {
   image: string;
@@ -9,23 +10,40 @@ type EventIsExpanded = {
   isExpanded: boolean;
 };
 
+const buttonStyles = `
+display: block;
+width: 160px;
+background-color: ${colours.blue};
+color: ${colours.white};
+font-weight: bold;
+text-align: center;
+font-size: 0.875rem;
+padding: 12px 0;
+`;
+
 const SearchFormWrapper = styled.div`
   padding: 80px 0 0;
   z-index: 1;
-  background-color: rgb(0, 0, 0);
-  display: flex;
+  background-color: ${colours.black};
+  position: fixed;
   width: 100%;
+  display: flex;
   justify-content: center;
 `;
 
 const SearchByVenueForm = styled.form`
+  width: 100%;
   max-width: 1080px;
+  padding: 0 5%;
+
+  @media screen and (min-width: ${breakPoints.tablet}) {
+    padding: 0 5%;
+  }
 `;
 
-const EventImage = styled.div<EventImageProps>`
+const EventImageWrapper = styled.div<EventImageProps>`
   background: ${({ image }) => `url(${image})`};
   height: ${({ isExpanded }) => (isExpanded ? '160px' : '320px')};
-  width: 100%;
   background-size: cover;
   margin-bottom: 16px;
   display: flex;
@@ -36,31 +54,48 @@ const SearchByVenueTextInput = styled.input`
   appearance: none;
   color: inherit;
   padding: 12px;
-  margin-left: -12px;
   border-radius: 32px;
-  background-color: rgb(255, 255, 255);
+  background-color: ${colours.white};
   font-size: 16px;
   line-height: 20px;
   width: 100%;
   outline: none;
-  border: black solid 1px;
+  border: ${colours.black} solid 1px;
 `;
 
+const EventsListWrapper = styled.div`
+  padding-top: 126px;
+`
+
 const EventsWrapper = styled.div`
-  padding: 16px;
+  padding: 16px 5%;
+  min-width: 288px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  @media screen and (min-width: ${breakPoints.tablet}) {
+    padding: 16px 10%;
+  }
 `;
 
 const EventWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
+  width: 100%;
   &:last-of-type {
     margin-bottom: 0;
+  }
+  @media screen and (min-width: ${breakPoints.tablet}) {
+    width: 48%;
+  }
+  @media screen and (min-width: ${breakPoints.desktop}) {
+    width: 31%;
   }
 `;
 
 const EventDataAndTime = styled.span`
-  color: #000000;
+  color: ${colours.black};
   font-size: 1rem;
   margin-bottom: 8px;
 `;
@@ -69,6 +104,11 @@ const EventName = styled.h2`
   font-size: 1.75rem;
   font-weight: bold;
   margin-bottom: 16px;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const EventVenue = styled.h3`
@@ -83,18 +123,18 @@ const EventVenueLocation = styled.span`
 
 const EventDescriptionWrapper = styled.div`
   padding: 11px 16px;
-  background-color: #f2f2f2;
+  background-color: ${colours.grey};
   margin-bottom: 24px;
 `;
 
-const EventDescription = styled.p`
+const EventDescriptionText = styled.p`
   font-size: 1rem;
   margin-bottom: 16px;
 `;
 
 const EventInfoTitle = styled.span`
   font-size: 0.875rem;
-  color: #3c74ff;
+  color: ${colours.blue};
   margin-bottom: 16px;
   display: block;
   font-weight: bold;
@@ -129,21 +169,14 @@ const EventButtonWrapper = styled.div`
 `;
 
 const EventButtonLink = styled.a`
-  display: block;
-  width: 160px;
-  background-color: #3c74ff;
+  ${buttonStyles};
   text-decoration: none;
-  color: #ffffff;
-  font-weight: bold;
-  text-align: center;
-  font-size: 0.875rem;
-  padding: 12px 0;
 `;
 
 const EventSoldOutText = styled.span`
   font-size: 0.875rem;
   font-weight: bold;
-  color: #000000;
+  color: ${colours.black};
   opacity: 0.5;
 `;
 
@@ -165,15 +198,18 @@ const EventMoreInfoText = styled.span`
 const EventTrack = styled.div<EventIsExpanded>`
   height: 50px;
   width: 50px;
-  background-color: #000000;
+  background-color: ${colours.black};
   opacity: 0.6;
-  color: #ffffff;
+  color: ${colours.white};
   margin-top: ${({ isExpanded }) => (isExpanded ? '110px' : '270px')};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const EventFeatured = styled.span<EventIsExpanded>`
-  background-color: #3c74ff;
-  color: #ffffff;
+  background-color: ${colours.blue};
+  color: ${colours.white};
   font-size: 0.875rem;
   font-weight: bold;
   padding: 6px 8px;
@@ -182,10 +218,32 @@ const EventFeatured = styled.span<EventIsExpanded>`
   margin-right: 16px;
 `;
 
+const LoadMoreWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const LoadMoreButton = styled.button`
+  ${buttonStyles};
+  border: none;
+`;
+
+const EventSearchResultsTitleWrapper = styled.div`
+  padding: 16px 5%;
+  @media screen and (min-width: ${breakPoints.tablet}) {
+    padding: 16px 10%;
+  }
+`;
+
+const EventSearchResultsText = styled.h1`
+  font-size: 1.5rem;
+`;
+
 export {
   SearchFormWrapper,
   SearchByVenueForm,
   SearchByVenueTextInput,
+  EventsListWrapper,
   EventsWrapper,
   EventWrapper,
   EventDataAndTime,
@@ -193,7 +251,7 @@ export {
   EventVenue,
   EventVenueLocation,
   EventDescriptionWrapper,
-  EventDescription,
+  EventDescriptionText,
   EventInfoTitle,
   EventLineupOrderedList,
   EventLineupListItem,
@@ -201,11 +259,15 @@ export {
   EventTicketListItem,
   EventButtonWrapper,
   EventButtonLink,
-  EventImage,
+  EventImageWrapper,
   EventSoldOutText,
   EventLowestTicketPriceText,
   EventMoreInfo,
   EventMoreInfoText,
   EventTrack,
   EventFeatured,
+  LoadMoreButton,
+  LoadMoreWrapper,
+  EventSearchResultsTitleWrapper,
+  EventSearchResultsText,
 };
