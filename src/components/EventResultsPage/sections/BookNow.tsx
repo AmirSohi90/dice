@@ -12,12 +12,24 @@ type Props = {
   url: string;
   tickets: Array<Ticket>;
   currency: Currencies;
+  isOnSaleNow: boolean;
 };
 
-export const BookNow: React.FC<Props> = ({ url, tickets, currency }) => {
+export const BookNow: React.FC<Props> = ({
+  url,
+  tickets,
+  currency,
+  isOnSaleNow,
+}) => {
+  const buttonText = isOnSaleNow ? 'BOOK NOW' : 'GET REMINDED';
+
   return (
     <EventButtonWrapper>
-      <EventButtonLink href={url}>BOOK NOW</EventButtonLink>
+      <EventButtonLink
+        href={isOnSaleNow ? url : 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+      >
+        {buttonText}
+      </EventButtonLink>
       <EventLowestTicketPriceText>
         {getLowestPrice(tickets, currency)}
       </EventLowestTicketPriceText>

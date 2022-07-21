@@ -41,6 +41,9 @@ export const EventDetail: React.FC<Props> = ({
   onSaleFrom,
 }) => {
   const [shouldShowMore, setShouldShowMore] = useState<boolean>(false);
+  const currentDate = new Date();
+  const onSaleDate = new Date(onSaleFrom);
+  const isOnSaleNow = onSaleDate < currentDate;
 
   return (
     <EventWrapper>
@@ -50,6 +53,7 @@ export const EventDetail: React.FC<Props> = ({
         onSaleFrom={onSaleFrom}
         isFeatured={isFeatured}
         previewTrack={previewTrack}
+        isOnSaleNow={isOnSaleNow}
       />
       <EventTimeAndVenue
         venue={venue}
@@ -66,7 +70,12 @@ export const EventDetail: React.FC<Props> = ({
         tickets={tickets}
         lineup={lineup}
       />
-      <BookNow tickets={tickets} currency={currency} url={url} />
+      <BookNow
+        isOnSaleNow={isOnSaleNow}
+        tickets={tickets}
+        currency={currency}
+        url={url}
+      />
     </EventWrapper>
   );
 };

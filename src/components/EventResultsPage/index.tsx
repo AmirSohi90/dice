@@ -4,8 +4,10 @@ import { EventResultsPageView } from './EventResultsPageView';
 
 export const EventsResultsPage: React.FC = () => {
   const [venueName, setVenueName] = useState('');
-  const { events, setPageNumber, hasNextPage, pageNumber } =
+  console.log(venueName);
+  const { events, setPageNumber, hasNextPage, pageNumber, responseStatus } =
     useGetEventsByVenue(venueName);
+  console.log(events);
 
   return (
     <EventResultsPageView
@@ -15,6 +17,7 @@ export const EventsResultsPage: React.FC = () => {
       setPageNumber={setPageNumber}
       hasNextPage={hasNextPage}
       pageNumber={pageNumber}
+      responseStatus={responseStatus}
     />
   );
 };

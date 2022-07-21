@@ -10,12 +10,27 @@ type EventIsExpanded = {
   isExpanded: boolean;
 };
 
+const buttonStyles = `
+display: block;
+width: 160px;
+background-color: ${colours.blue};
+color: ${colours.white};
+font-weight: bold;
+text-align: center;
+font-size: 0.875rem;
+padding: 12px 0;
+`;
+
 const SearchFormWrapper = styled.div`
-  padding: 80px 10% 0;
+  padding: 80px 5% 0;
   z-index: 1;
   background-color: ${colours.black};
   display: flex;
   justify-content: center;
+
+  @media screen and (min-width: ${breakPoints.tablet}) {
+    padding: 80px 10% 0;
+  }
 `;
 
 const SearchByVenueForm = styled.form`
@@ -46,11 +61,14 @@ const SearchByVenueTextInput = styled.input`
 `;
 
 const EventsWrapper = styled.div`
-  padding: 16px 10%;
+  padding: 16px 5%;
   min-width: 288px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  @media screen and (min-width: ${breakPoints.tablet}) {
+    padding: 16px 10%;
+  }
 `;
 
 const EventWrapper = styled.div`
@@ -144,15 +162,8 @@ const EventButtonWrapper = styled.div`
 `;
 
 const EventButtonLink = styled.a`
-  display: block;
-  width: 160px;
-  background-color: ${colours.blue};
+  ${buttonStyles};
   text-decoration: none;
-  color: ${colours.white};
-  font-weight: bold;
-  text-align: center;
-  font-size: 0.875rem;
-  padding: 12px 0;
 `;
 
 const EventSoldOutText = styled.span`
@@ -200,6 +211,27 @@ const EventFeatured = styled.span<EventIsExpanded>`
   margin-right: 16px;
 `;
 
+const LoadMoreWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const LoadMoreButton = styled.button`
+  ${buttonStyles};
+  border: none;
+`;
+
+const EventSearchResultsTitleWrapper = styled.div`
+  padding: 16px 5%;
+  @media screen and (min-width: ${breakPoints.tablet}) {
+    padding: 16px 10%;
+  }
+`;
+
+const EventSearchResultsText = styled.h1`
+  font-size: 1.5rem;
+`;
+
 export {
   SearchFormWrapper,
   SearchByVenueForm,
@@ -226,4 +258,8 @@ export {
   EventMoreInfoText,
   EventTrack,
   EventFeatured,
+  LoadMoreButton,
+  LoadMoreWrapper,
+  EventSearchResultsTitleWrapper,
+  EventSearchResultsText,
 };

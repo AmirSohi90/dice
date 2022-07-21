@@ -5,11 +5,6 @@ export enum ResponseStatus {
   ERROR = 'ERROR',
 }
 
-export interface QueryInformation {
-  status: 'error' | 'idle' | 'loading' | 'success';
-  error: unknown;
-}
-
 export class HTTPError extends Error {
   readonly statusCode: number;
 

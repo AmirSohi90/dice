@@ -9,6 +9,7 @@ type Props = {
   previewTrack: string;
   isFeatured: boolean;
   onSaleFrom: string;
+  isOnSaleNow: boolean;
 };
 
 export const EventImage: React.FC<Props> = ({
@@ -17,6 +18,7 @@ export const EventImage: React.FC<Props> = ({
   onSaleFrom,
   previewTrack,
   isFeatured,
+  isOnSaleNow,
 }) => {
   return (
     <EventImageWrapper isExpanded={shouldShowMore} image={image}>
@@ -30,6 +32,7 @@ export const EventImage: React.FC<Props> = ({
         isFeatured={isFeatured}
         onSaleFrom={onSaleFrom}
         shouldShowMore={shouldShowMore}
+        isOnSaleNow={isOnSaleNow}
       />
     </EventImageWrapper>
   );

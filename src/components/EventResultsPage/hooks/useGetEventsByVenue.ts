@@ -63,7 +63,7 @@ const getPreviewTrack = (
 
   if (eventHasSpotifyTrack) return spotifyTracks[0].preview_url;
   if (eventHasAppleTrack) return appleMusicTracks[0].preview_url;
-  return "";
+  return '';
 };
 
 const getTicketData = (tickets: Array<TicketTypes>): Array<Ticket> =>
@@ -110,6 +110,11 @@ export const useGetEventsByVenue = (
     setData([]);
     setPageNumber(1);
     setHasNextPage(false);
+    if(!venueName) {
+      setData([]);
+      setPageNumber(1);
+      setHasNextPage(false);
+    }
   }, [venueName]);
 
   useEffect(() => {
