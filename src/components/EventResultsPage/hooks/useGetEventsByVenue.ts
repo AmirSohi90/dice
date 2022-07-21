@@ -1,4 +1,3 @@
-import { useQuery } from 'react-query';
 import apis from '../../../apis/apis';
 import { Currencies, EventData, Lineup, MusicTracks, TicketTypes, } from '../../../types/EventData';
 import { calculateResponseStatus, ResponseStatus, } from './calculateResponseStatus';

@@ -3,7 +3,6 @@ import { render, waitFor, screen } from '@testing-library/react';
 import apis from '../../../apis/apis';
 import { EventData } from '../../../types/EventData';
 import { EventDataBuilder } from '../../../testHelpers/builders/eventDataBuilder';
-import { withProviders } from '../../../testHelpers/withProviders';
 import { EventsResultsPage } from '../index';
 import userEvent from '@testing-library/user-event';
 
@@ -13,7 +12,7 @@ describe('[EventsResultsPage]', () => {
   afterEach(() => jest.resetAllMocks());
 
   it('should display what what term the user has searched for', async () => {
-    render(withProviders(<EventsResultsPage />));
+    render(<EventsResultsPage />);
 
     const input = screen.getByRole('textbox');
     await userEvent.type(input, data.venue);
@@ -26,7 +25,7 @@ describe('[EventsResultsPage]', () => {
   });
 
   it('should not render the display text if search value is empty', () => {
-    render(withProviders(<EventsResultsPage />));
+    render(<EventsResultsPage />);
 
     expect(
       screen.queryByText(/Your search results for/)
@@ -39,7 +38,7 @@ describe('[EventsResultsPage]', () => {
       links: { self: 'link' },
     });
 
-    render(withProviders(<EventsResultsPage />));
+    render(<EventsResultsPage />);
 
     await waitFor(() => {
       expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
@@ -99,7 +98,7 @@ describe('[EventsResultsPage]', () => {
       links: { self: 'link' },
     });
 
-    render(withProviders(<EventsResultsPage />));
+    render(<EventsResultsPage />);
 
     await waitFor(() => {
       expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
@@ -152,7 +151,7 @@ describe('[EventsResultsPage]', () => {
       links: { self: 'link' },
     });
 
-    render(withProviders(<EventsResultsPage />));
+    render(<EventsResultsPage />);
 
     const input = screen.getByRole('textbox');
     await userEvent.type(input, 'Valid search result');
