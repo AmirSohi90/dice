@@ -16,7 +16,7 @@ const initialProps = {
   url: 'test-url',
   currency: Currencies.USD,
   previewTrack: null,
-  onSaleDate: 'onsale',
+  onSaleFrom: 'onsale',
   isFeatured: false,
   index: 0,
 };

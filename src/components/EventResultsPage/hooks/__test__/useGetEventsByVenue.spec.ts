@@ -58,7 +58,7 @@ describe('[useGetEventsByVenue]', () => {
 
     await waitFor(() => {
       expect(apis.getEventsByVenue).toHaveBeenCalledTimes(1);
-      expect(result.current.eventData).toEqual(mappedData);
+      expect(result.current.events).toEqual(mappedData);
     });
   });
 

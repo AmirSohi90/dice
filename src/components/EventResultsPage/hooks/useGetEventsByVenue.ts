@@ -14,7 +14,7 @@ import { useDebouncedValue } from './useDebounceValue';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 type GetEventsByVenueResponse = {
-  eventData: Array<EventsByVenueResponse>;
+  events: Array<EventsByVenueResponse>;
   hasNextPage: boolean;
   setPageNumber: Dispatch<SetStateAction<number>>;
   pageNumber: number;
@@ -102,7 +102,7 @@ export const useGetEventsByVenue = (
   const [hasNextPage, setHasNextPage] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [eventData, setData] = useState<Array<EventsByVenueResponse>>([]);
+  const [events, setData] = useState<Array<EventsByVenueResponse>>([]);
 
   useEffect(() => {
     setData([]);
@@ -117,7 +117,7 @@ export const useGetEventsByVenue = (
         .then((res) => {
           if (res.data.length) {
             const mappedEventData = res.data.map(mapEventData);
-            const concatenatedData = [...eventData, ...mappedEventData];
+            const concatenatedData = [...events, ...mappedEventData];
             setData(concatenatedData);
           }
           setHasNextPage(res.links.next ? true : false);
@@ -132,7 +132,7 @@ export const useGetEventsByVenue = (
   const responseStatus = calculateResponseStatus(isLoading, error);
 
   return {
-    eventData,
+    events,
     hasNextPage,
     setPageNumber,
     responseStatus,

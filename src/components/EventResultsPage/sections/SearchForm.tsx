@@ -6,11 +6,11 @@ import {
 } from '../EventResultsPage.styles';
 
 type Props = {
-    venueName: string;
-    setVenueName: Dispatch<SetStateAction<string>>
-}
+  venueName: string;
+  setVenueName: Dispatch<SetStateAction<string>>;
+};
 
-export const SearchForm: React.FC<Props> = ({venueName, setVenueName}) => {
+export const SearchForm: React.FC<Props> = ({ venueName, setVenueName }) => {
   return (
     <SearchFormWrapper>
       <SearchByVenueForm onSubmit={(e) => e.preventDefault()}>
@@ -19,7 +19,9 @@ export const SearchForm: React.FC<Props> = ({venueName, setVenueName}) => {
           name="Search"
           placeholder="Search for an event by venue"
           value={venueName}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setVenueName(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setVenueName(event.target.value)
+          }
         />
       </SearchByVenueForm>
     </SearchFormWrapper>

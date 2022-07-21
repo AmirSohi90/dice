@@ -46,8 +46,7 @@ type Props = {
   previewTrack: string | null;
   currency: Currencies;
   isFeatured: boolean;
-  onSaleDate: string;
-  index: number;
+  onSaleFrom: string;
 };
 
 export const EventDetail: React.FC<Props> = ({
@@ -64,8 +63,7 @@ export const EventDetail: React.FC<Props> = ({
   currency,
   previewTrack,
   isFeatured,
-  onSaleDate,
-  index,
+  onSaleFrom,
 }) => {
   const { formattedDate, formattedTime } = getFormattedDate(startDate);
   const [shouldShowMore, setShouldShowMore] = useState<boolean>(false);
@@ -75,14 +73,14 @@ export const EventDetail: React.FC<Props> = ({
 
   const ImageTextToRender = () => {
     const currentDate = new Date();
-    const onSaleFrom = new Date(onSaleDate);
+    const onSaleDate = new Date(onSaleFrom);
     if (isFeatured)
       return (
         <EventFeatured isExpanded={shouldShowMore}>FEATURED</EventFeatured>
       );
-    if (onSaleFrom > currentDate) {
+    if (onSaleDate > currentDate) {
       return (
-        <div>On Sale from {getFormattedDate(onSaleDate).formattedDate}</div>
+        <div>On Sale from {getFormattedDate(onSaleFrom).formattedDate}</div>
       );
     }
     return null;
