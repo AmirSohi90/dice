@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import {colours} from '../../helpers/styles';
+import { breakPoints, colours } from '../../helpers/styles';
 
 type EventImageProps = {
   image: string;
@@ -46,16 +46,26 @@ const SearchByVenueTextInput = styled.input`
 `;
 
 const EventsWrapper = styled.div`
-  padding: 16px;
+  padding: 16px 10%;
   min-width: 288px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 const EventWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
+  width: 100%;
   &:last-of-type {
     margin-bottom: 0;
+  }
+  @media screen and (min-width: ${breakPoints.tablet}) {
+    width: 48%;
+  }
+  @media screen and (min-width: ${breakPoints.desktop}) {
+    width: 31%;
   }
 `;
 
@@ -69,6 +79,11 @@ const EventName = styled.h2`
   font-size: 1.75rem;
   font-weight: bold;
   margin-bottom: 16px;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const EventVenue = styled.h3`

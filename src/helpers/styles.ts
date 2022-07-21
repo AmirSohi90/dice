@@ -5,6 +5,12 @@ const colours = {
     grey: "#f2f2f2"
 };
 
+const breakPoints = {
+    mobile: '320px',
+    tablet: '768px',
+    desktop: '1024px'
+}
 
 
-export {colours};
+
+export {colours, breakPoints};
