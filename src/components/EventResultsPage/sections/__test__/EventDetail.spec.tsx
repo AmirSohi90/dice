@@ -15,7 +15,7 @@ const initialProps = {
   tickets: [],
   url: 'test-url',
   currency: Currencies.USD,
-  previewTrack: null,
+  previewTrack: "",
   onSaleFrom: 'onsale',
   isFeatured: false,
   index: 0,

@@ -23,7 +23,7 @@ const SearchByVenueForm = styled.form`
   max-width: 1080px;
 `;
 
-const EventImage = styled.div<EventImageProps>`
+const EventImageWrapper = styled.div<EventImageProps>`
   background: ${({ image }) => `url(${image})`};
   height: ${({ isExpanded }) => (isExpanded ? '160px' : '320px')};
   background-size: cover;
@@ -102,7 +102,7 @@ const EventDescriptionWrapper = styled.div`
   margin-bottom: 24px;
 `;
 
-const EventDescription = styled.p`
+const EventDescriptionText = styled.p`
   font-size: 1rem;
   margin-bottom: 16px;
 `;
@@ -208,7 +208,7 @@ export {
   EventVenue,
   EventVenueLocation,
   EventDescriptionWrapper,
-  EventDescription,
+  EventDescriptionText,
   EventInfoTitle,
   EventLineupOrderedList,
   EventLineupListItem,
@@ -216,7 +216,7 @@ export {
   EventTicketListItem,
   EventButtonWrapper,
   EventButtonLink,
-  EventImage,
+  EventImageWrapper,
   EventSoldOutText,
   EventLowestTicketPriceText,
   EventMoreInfo,

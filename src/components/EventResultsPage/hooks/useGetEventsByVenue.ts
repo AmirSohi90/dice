@@ -13,6 +13,13 @@ import {
 import { useDebouncedValue } from './useDebounceValue';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
+export type Ticket = {
+  id: number;
+  name: string;
+  price: number;
+  soldOut: boolean;
+};
+
 type GetEventsByVenueResponse = {
   events: Array<EventsByVenueResponse>;
   hasNextPage: boolean;
@@ -23,17 +30,12 @@ type GetEventsByVenueResponse = {
 
 export type EventsByVenueResponse = {
   id: string;
-  previewTrack: string | null;
+  previewTrack: string;
   name: string;
   lineup: Array<Lineup>;
   description: string;
   isFeatured: boolean;
-  tickets: Array<{
-    id: number;
-    name: string;
-    price: number;
-    soldOut: boolean;
-  }>;
+  tickets: Array<Ticket>;
   startTime: string;
   startDate: string;
   isSoldOut: boolean;
@@ -61,10 +63,10 @@ const getPreviewTrack = (
 
   if (eventHasSpotifyTrack) return spotifyTracks[0].preview_url;
   if (eventHasAppleTrack) return appleMusicTracks[0].preview_url;
-  return null;
+  return "";
 };
 
-const getTicketData = (tickets: Array<TicketTypes>) =>
+const getTicketData = (tickets: Array<TicketTypes>): Array<Ticket> =>
   tickets.map(({ id, name, price, sold_out }) => ({
     id,
     name,
