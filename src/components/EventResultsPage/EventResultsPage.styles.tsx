@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import {colours} from '../../helpers/styles';
 
 type EventImageProps = {
   image: string;
@@ -12,7 +13,7 @@ type EventIsExpanded = {
 const SearchFormWrapper = styled.div`
   padding: 80px 10% 0;
   z-index: 1;
-  background-color: rgb(0, 0, 0);
+  background-color: ${colours.black};
   display: flex;
   justify-content: center;
 `;
@@ -25,8 +26,6 @@ const SearchByVenueForm = styled.form`
 const EventImage = styled.div<EventImageProps>`
   background: ${({ image }) => `url(${image})`};
   height: ${({ isExpanded }) => (isExpanded ? '160px' : '320px')};
-  //min-width: 320px;
-  //width: 100%;
   background-size: cover;
   margin-bottom: 16px;
   display: flex;
@@ -38,12 +37,12 @@ const SearchByVenueTextInput = styled.input`
   color: inherit;
   padding: 12px;
   border-radius: 32px;
-  background-color: rgb(255, 255, 255);
+  background-color: ${colours.white};
   font-size: 16px;
   line-height: 20px;
   width: 100%;
   outline: none;
-  border: black solid 1px;
+  border: ${colours.black} solid 1px;
 `;
 
 const EventsWrapper = styled.div`
@@ -61,7 +60,7 @@ const EventWrapper = styled.div`
 `;
 
 const EventDataAndTime = styled.span`
-  color: #000000;
+  color: ${colours.black};
   font-size: 1rem;
   margin-bottom: 8px;
 `;
@@ -84,7 +83,7 @@ const EventVenueLocation = styled.span`
 
 const EventDescriptionWrapper = styled.div`
   padding: 11px 16px;
-  background-color: #f2f2f2;
+  background-color: ${colours.grey};
   margin-bottom: 24px;
 `;
 
@@ -95,7 +94,7 @@ const EventDescription = styled.p`
 
 const EventInfoTitle = styled.span`
   font-size: 0.875rem;
-  color: #3c74ff;
+  color: ${colours.blue};
   margin-bottom: 16px;
   display: block;
   font-weight: bold;
@@ -132,9 +131,9 @@ const EventButtonWrapper = styled.div`
 const EventButtonLink = styled.a`
   display: block;
   width: 160px;
-  background-color: #3c74ff;
+  background-color: ${colours.blue};
   text-decoration: none;
-  color: #ffffff;
+  color: ${colours.white};
   font-weight: bold;
   text-align: center;
   font-size: 0.875rem;
@@ -144,7 +143,7 @@ const EventButtonLink = styled.a`
 const EventSoldOutText = styled.span`
   font-size: 0.875rem;
   font-weight: bold;
-  color: #000000;
+  color: ${colours.black};
   opacity: 0.5;
 `;
 
@@ -166,15 +165,15 @@ const EventMoreInfoText = styled.span`
 const EventTrack = styled.div<EventIsExpanded>`
   height: 50px;
   width: 50px;
-  background-color: #000000;
+  background-color: ${colours.black};
   opacity: 0.6;
-  color: #ffffff;
+  color: ${colours.white};
   margin-top: ${({ isExpanded }) => (isExpanded ? '110px' : '270px')};
 `;
 
 const EventFeatured = styled.span<EventIsExpanded>`
-  background-color: #3c74ff;
-  color: #ffffff;
+  background-color: ${colours.blue};
+  color: ${colours.white};
   font-size: 0.875rem;
   font-weight: bold;
   padding: 6px 8px;
