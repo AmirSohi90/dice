@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/react';
+import { waitFor, renderHook } from '@testing-library/react';
 import apis from '../../../../apis/apis';
 import { EventData } from '../../../../types/EventData';
 import { useGetEventsByVenue } from '../useGetEventsByVenue';
@@ -17,14 +17,12 @@ describe('[useGetEventsByVenue]', () => {
       links: { self: 'link' },
     });
 
-    const { result } = renderHookWithProviders(() =>
-      useGetEventsByVenue('test-venue')
-    );
+    const {result} = renderHook(() => useGetEventsByVenue('test-venue'))
 
     await waitFor(() => {
       expect(apis.getEventsByVenue).toHaveBeenCalledTimes(1);
-      expect(result.current).toEqual({
-        data: [
+      expect(result.current.eventData).toEqual(
+        [
           {
             id: data.id,
             previewTrack: data.spotify_tracks[0].preview_url,
@@ -56,9 +54,7 @@ describe('[useGetEventsByVenue]', () => {
             currency: data.currency,
             url: data.url,
           },
-        ],
-        responseStatus: ResponseStatus.SUCCESS,
-      });
+        ]);
     });
   });
 

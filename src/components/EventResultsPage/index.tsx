@@ -5,14 +5,14 @@ import {
   SearchByVenueTextInput,
   SearchFormWrapper,
 } from './EventResultsPage.styles';
-import { useGetEventsByVenue } from './hooks/useGetEventsByVenue';
 import { EventDetail } from './sections/EventDetail';
+import {  useGetEventsByVenue } from "./hooks/useGetEventsByVenue";
 
 export const EventsResultsPage: React.FC = () => {
   const [venueName, setVenueName] = useState('');
-  const { data } = useGetEventsByVenue(venueName);
+  const {eventData, setPageNumber, hasNextPage, pageNumber} = useGetEventsByVenue(venueName)
 
-  return (
+    return (
     <div>
       <SearchFormWrapper>
         <SearchByVenueForm>
@@ -27,7 +27,7 @@ export const EventsResultsPage: React.FC = () => {
       </SearchFormWrapper>
       {!!venueName && <div>Your search results for {venueName}</div>}
       <EventsWrapper>
-        {data?.map((event, index) => (
+        {eventData?.map((event, index) => (
           <EventDetail
             key={event.id}
             image={event.image}
@@ -48,7 +48,7 @@ export const EventsResultsPage: React.FC = () => {
           />
         ))}
       </EventsWrapper>
-      {/*<button onClick={setEndpoint} />*/}
+        {hasNextPage && <button onClick={() => setPageNumber(pageNumber + 1)}/>}
     </div>
   );
 };

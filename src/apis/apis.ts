@@ -6,10 +6,11 @@ type EventsByVenueResponseData = {
 };
 
 const getEventsByVenue = async (
-  venueName: string
+  venueName: string,
+  pageNumber: number
 ): Promise<EventsByVenueResponseData> => {
   const res = await fetch(
-    `https://events-api.dice.fm/v1/events?page[size]=12&filters[venue]=${venueName}`,
+      `https://events-api.dice.fm/v1/events?page[size]=12&filters[venue]=${venueName}&page[number]=${pageNumber}`,
     {
       method: 'GET',
       headers: {
