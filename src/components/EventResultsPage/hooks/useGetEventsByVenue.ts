@@ -3,11 +3,14 @@ import apis from '../../../apis/apis';
 import { Currencies, EventData, Lineup, MusicTracks, TicketTypes, } from '../../../types/EventData';
 import { calculateResponseStatus, ResponseStatus, } from './calculateResponseStatus';
 import { useDebouncedValue } from './useDebounceValue';
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 type GetEventsByVenueResponse = {
-  data: Array<EventsByVenueResponse> | undefined;
-  responseStatus: ResponseStatus;
+  eventData: Array<EventsByVenueResponse>;
+  hasNextPage: boolean;
+  setPageNumber: Dispatch<SetStateAction<number>>;
+  pageNumber: number;
+  isLoading: boolean;
 };
 
 export type EventsByVenueResponse = {
@@ -85,7 +88,7 @@ export const mapEventData = (event: EventData): EventsByVenueResponse => ({
 
 export const useGetEventsByVenue = (
   venueName: string,
-) => {
+): GetEventsByVenueResponse => {
   const debouncedValue = useDebouncedValue(venueName);
   const [pageNumber, setPageNumber] = useState(1)
   const [hasNextPage, setHasNextPage] = useState(false);
