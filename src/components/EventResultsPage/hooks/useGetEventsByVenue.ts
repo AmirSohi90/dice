@@ -107,6 +107,7 @@ export const useGetEventsByVenue = (
   useEffect(() => {
     setData([]);
     setPageNumber(1);
+    setHasNextPage(false);
   }, [venueName]);
 
   useEffect(() => {

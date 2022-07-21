@@ -10,22 +10,23 @@ type EventIsExpanded = {
 };
 
 const SearchFormWrapper = styled.div`
-  padding: 80px 0 0;
+  padding: 80px 10% 0;
   z-index: 1;
   background-color: rgb(0, 0, 0);
   display: flex;
-  width: 100%;
   justify-content: center;
 `;
 
 const SearchByVenueForm = styled.form`
+  width: 100%;
   max-width: 1080px;
 `;
 
 const EventImage = styled.div<EventImageProps>`
   background: ${({ image }) => `url(${image})`};
   height: ${({ isExpanded }) => (isExpanded ? '160px' : '320px')};
-  width: 100%;
+  //min-width: 320px;
+  //width: 100%;
   background-size: cover;
   margin-bottom: 16px;
   display: flex;
@@ -36,7 +37,6 @@ const SearchByVenueTextInput = styled.input`
   appearance: none;
   color: inherit;
   padding: 12px;
-  margin-left: -12px;
   border-radius: 32px;
   background-color: rgb(255, 255, 255);
   font-size: 16px;
@@ -48,6 +48,7 @@ const SearchByVenueTextInput = styled.input`
 
 const EventsWrapper = styled.div`
   padding: 16px;
+  min-width: 288px;
 `;
 
 const EventWrapper = styled.div`
