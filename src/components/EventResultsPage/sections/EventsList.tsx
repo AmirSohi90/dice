@@ -1,11 +1,14 @@
 import React from 'react';
 import {
-    EventSearchResultsTitleWrapper,
-    EventsListWrapper,
+  EventSearchResultsTitleWrapper,
+  EventsListWrapper,
 } from '../EventResultsPage.styles';
 import { EventDetail } from './EventDetail';
 import { EventsByVenueResponse } from '../hooks/useGetEventsByVenue';
-import { PageLayout, HeadingText } from "../../SharedStyledComponents/SharedStylingComponents.styles";
+import {
+  PageLayout,
+  HeadingText,
+} from '../../SharedStyledComponents/SharedStylingComponents.styles';
 
 type Props = {
   events: Array<EventsByVenueResponse>;
@@ -17,9 +20,7 @@ export const EventsList: React.FC<Props> = ({ events, venueName }) => {
     <EventsListWrapper>
       {!!venueName && (
         <EventSearchResultsTitleWrapper>
-          <HeadingText>
-            Your search results for {venueName}
-          </HeadingText>
+          <HeadingText>Your search results for {venueName}</HeadingText>
         </EventSearchResultsTitleWrapper>
       )}
       <PageLayout>

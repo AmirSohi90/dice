@@ -4,7 +4,7 @@ import { EventsByVenueResponse } from './hooks/useGetEventsByVenue';
 import { EventsList } from './sections/EventsList';
 import { LoadMore } from './sections/LoadMore';
 import { ResponseStatus } from './hooks/calculateResponseStatus';
-import { Loading } from "../SharedComponents/Loading";
+import { Loading } from '../SharedComponents/Loading';
 
 type Props = {
   venueName: string;
@@ -38,7 +38,7 @@ export const EventResultsPageView: React.FC<Props> = ({
           setPageNumber={setPageNumber}
         />
       )}
-      {responseStatus === ResponseStatus.LOADING && <Loading/>}
+      {responseStatus === ResponseStatus.LOADING && <Loading />}
     </>
   );
 };

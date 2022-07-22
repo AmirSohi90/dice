@@ -65,7 +65,7 @@ const SearchByVenueTextInput = styled.input`
 
 const EventsListWrapper = styled.div`
   padding-top: 126px;
-`
+`;
 
 const EventWrapper = styled.div`
   display: flex;

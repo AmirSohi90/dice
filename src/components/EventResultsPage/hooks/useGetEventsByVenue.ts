@@ -110,7 +110,7 @@ export const useGetEventsByVenue = (
     setData([]);
     setPageNumber(1);
     setHasNextPage(false);
-    if(!venueName) {
+    if (!venueName) {
       setData([]);
       setPageNumber(1);
       setHasNextPage(false);
