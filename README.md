@@ -32,3 +32,5 @@ End result functionally does everything that was required. Fetches results based
 Image compression is a must for this, the images are incredibly large and some sort of compression tool would've been handy. I tried to find something for free but was unable to. I changed the image size but as I'm sure you know css doesn't compress the file size. As you scroll through you can see how long it takes to render. This would be poor user experience.
 
 For this task storybook would've been incredibly useful, especially being able to have some mock data and designing the component that rendered an event item. If this was something for production I'd have implemented it.
+
+Not necessarily prod code but a text saying no search results found would be good to have also.
