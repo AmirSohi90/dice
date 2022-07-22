@@ -22,6 +22,7 @@ type Props = {
   currency: Currencies;
   isFeatured: boolean;
   onSaleFrom: string;
+  isSoldOut: boolean;
 };
 
 export const EventDetail: React.FC<Props> = ({
@@ -39,6 +40,7 @@ export const EventDetail: React.FC<Props> = ({
   previewTrack,
   isFeatured,
   onSaleFrom,
+    isSoldOut
 }) => {
   const [shouldShowMore, setShouldShowMore] = useState<boolean>(false);
   const currentDate = new Date();
@@ -73,6 +75,7 @@ export const EventDetail: React.FC<Props> = ({
         lineup={lineup}
       />
       <BookNow
+          isSoldOut={isSoldOut}
         hasEventOccurred={hasEventOccurred}
         isOnSaleNow={isOnSaleNow}
         tickets={tickets}

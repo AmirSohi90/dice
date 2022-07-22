@@ -14,13 +14,20 @@ type Props = {
   currency: Currencies;
   isOnSaleNow: boolean;
   hasEventOccurred: boolean;
+  isSoldOut: boolean;
 };
 
-const buttonText = (
-  hasEventOccurred: boolean,
-  isOnSaleNow: boolean
-): string => {
+const buttonText = ({
+  hasEventOccurred,
+  isOnSaleNow,
+  isSoldOut,
+}: {
+  hasEventOccurred: boolean;
+  isOnSaleNow: boolean;
+  isSoldOut: boolean;
+}): string => {
   if (hasEventOccurred) return 'HAS OCCURRED';
+  if (isSoldOut) return 'SOLD OUT';
   return isOnSaleNow ? 'BOOK NOW' : 'GET REMINDED';
 };
 
@@ -30,14 +37,15 @@ export const BookNow: React.FC<Props> = ({
   currency,
   isOnSaleNow,
   hasEventOccurred,
+  isSoldOut,
 }) => {
   return (
     <EventButtonWrapper>
       <EventButtonLink
-          hasEventOccurred={hasEventOccurred}
+        isDisabled={hasEventOccurred || isSoldOut}
         href={isOnSaleNow ? url : 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
       >
-        {buttonText(hasEventOccurred, isOnSaleNow)}
+        {buttonText({ hasEventOccurred, isOnSaleNow, isSoldOut })}
       </EventButtonLink>
       <EventLowestTicketPriceText>
         {getLowestPrice(tickets, currency)}

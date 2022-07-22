@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import {
-    DiceLogo,
-    SearchByVenueForm,
-    SearchByVenueTextInput,
-    SearchFormWrapper,
+  DiceLogo,
+  SearchByVenueForm,
+  SearchByVenueTextInput,
+  SearchFormWrapper,
 } from '../EventResultsPage.styles';
-import logo from '../../../assets/dice-logo.png'
+import logo from '../../../assets/dice-logo.png';
 
 type Props = {
   venueName: string;
@@ -15,7 +15,7 @@ type Props = {
 export const SearchForm: React.FC<Props> = ({ venueName, setVenueName }) => {
   return (
     <SearchFormWrapper>
-      <DiceLogo src={logo} alt='dice-logo' />
+      <DiceLogo src={logo} alt="dice-logo" />
       <SearchByVenueForm onSubmit={(e) => e.preventDefault()}>
         <SearchByVenueTextInput
           type="search"

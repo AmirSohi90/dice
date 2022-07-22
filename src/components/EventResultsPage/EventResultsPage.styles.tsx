@@ -10,9 +10,9 @@ type EventIsExpanded = {
   isExpanded: boolean;
 };
 
-type EventHasOccurred = {
-  hasEventOccurred: boolean;
-}
+type ButtonIsDisabled = {
+  isDisabled: boolean;
+};
 
 const buttonStyles = `
 display: block;
@@ -27,7 +27,7 @@ padding: 12px 0;
 
 const DiceLogo = styled.img`
   width: 116px;
-`
+`;
 
 const SearchFormWrapper = styled.div`
   z-index: 1;
@@ -161,15 +161,18 @@ const EventButtonWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const EventButtonLink = styled.a<EventHasOccurred>`
+const EventButtonLink = styled.a<ButtonIsDisabled>`
   ${buttonStyles};
   text-decoration: none;
-  ${({hasEventOccurred}) => hasEventOccurred ? `
+  ${({ isDisabled }) =>
+    isDisabled
+      ? `
     pointer-events: none;
     background-color: ${colours.grey};
     color: ${colours.black};
     cursor: not-allowed;
-  `: ''}
+  `
+      : ''}
 `;
 
 const EventSoldOutText = styled.span`
