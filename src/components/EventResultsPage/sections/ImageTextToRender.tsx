@@ -15,8 +15,6 @@ export const ImageTextToRender: React.FC<Props> = ({
   shouldShowMore,
   isOnSaleNow,
 }) => {
-  const currentDate = new Date();
-  const onSaleDate = new Date(onSaleFrom);
   if (isFeatured) {
     return <EventFeatured isExpanded={shouldShowMore}>FEATURED</EventFeatured>;
   } else if (!isOnSaleNow) {
