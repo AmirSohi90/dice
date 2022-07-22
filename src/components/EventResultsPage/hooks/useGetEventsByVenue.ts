@@ -118,7 +118,7 @@ export const useGetEventsByVenue = (
   }, [venueName]);
 
   useEffect(() => {
-    if (debouncedValue) {
+    if (debouncedValue && !!venueName) {
       setLoading(true);
       apis
         .getEventsByVenue(debouncedValue, pageNumber)
