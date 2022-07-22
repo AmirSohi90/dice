@@ -19,28 +19,16 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+### `Setup`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Please ensure that you set up a .env file in the project root with the environment variable `REACT_APP_API_KEY` with the API you provided. I wasn't sure if it was okay to have on github so I played it safe
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `End Result`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+End result functionally does everything that was required. Fetches results based on the venue name and displays the results with the relevant information. I have added some tests but not full coverage just to save on time.
 
-### `yarn eject`
+### `Some nice to haves`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Image compression is a must for this, the images are incredibly large and some sort of compression tool would've been handy. I tried to find something for free but was unable to. I changed the image size but as I'm sure you know css doesn't compress the file size. As you scroll through you can see how long it takes to render. This would be poor user experience.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+For this task storybook would've been incredibly useful, especially being able to have some mock data and designing the component that rendered an event item. If this was something for production I'd have implemented it.
