@@ -43,7 +43,9 @@ export const EventDetail: React.FC<Props> = ({
   const [shouldShowMore, setShouldShowMore] = useState<boolean>(false);
   const currentDate = new Date();
   const onSaleDate = new Date(onSaleFrom);
+  const eventStartDate = new Date(startDate);
   const isOnSaleNow = onSaleDate < currentDate;
+  const hasEventOccurred = eventStartDate < currentDate;
 
   return (
     <EventWrapper>
@@ -71,6 +73,7 @@ export const EventDetail: React.FC<Props> = ({
         lineup={lineup}
       />
       <BookNow
+        hasEventOccurred={hasEventOccurred}
         isOnSaleNow={isOnSaleNow}
         tickets={tickets}
         currency={currency}

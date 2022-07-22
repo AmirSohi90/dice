@@ -10,6 +10,10 @@ type EventIsExpanded = {
   isExpanded: boolean;
 };
 
+type EventHasOccurred = {
+  hasEventOccurred: boolean;
+}
+
 const buttonStyles = `
 display: block;
 width: 160px;
@@ -157,9 +161,15 @@ const EventButtonWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const EventButtonLink = styled.a`
+const EventButtonLink = styled.a<EventHasOccurred>`
   ${buttonStyles};
   text-decoration: none;
+  ${({hasEventOccurred}) => hasEventOccurred ? `
+    pointer-events: none;
+    background-color: ${colours.grey};
+    color: ${colours.black};
+    cursor: not-allowed;
+  `: ''}
 `;
 
 const EventSoldOutText = styled.span`
