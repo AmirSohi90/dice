@@ -110,7 +110,7 @@ export const useGetEventsByVenue = (
     setData([]);
     setPageNumber(1);
     setHasNextPage(false);
-    if(!venueName) {
+    if (!venueName) {
       setData([]);
       setPageNumber(1);
       setHasNextPage(false);
@@ -118,7 +118,7 @@ export const useGetEventsByVenue = (
   }, [venueName]);
 
   useEffect(() => {
-    if (debouncedValue) {
+    if (debouncedValue && !!venueName) {
       setLoading(true);
       apis
         .getEventsByVenue(debouncedValue, pageNumber)

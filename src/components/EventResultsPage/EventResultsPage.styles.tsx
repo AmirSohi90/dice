@@ -65,17 +65,6 @@ const SearchByVenueTextInput = styled.input`
 
 const EventsListWrapper = styled.div`
   padding-top: 126px;
-`
-
-const EventsWrapper = styled.div`
-  padding: 16px 5%;
-  min-width: 288px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  @media screen and (min-width: ${breakPoints.tablet}) {
-    padding: 16px 10%;
-  }
 `;
 
 const EventWrapper = styled.div`
@@ -235,16 +224,11 @@ const EventSearchResultsTitleWrapper = styled.div`
   }
 `;
 
-const EventSearchResultsText = styled.h1`
-  font-size: 1.5rem;
-`;
-
 export {
   SearchFormWrapper,
   SearchByVenueForm,
   SearchByVenueTextInput,
   EventsListWrapper,
-  EventsWrapper,
   EventWrapper,
   EventDataAndTime,
   EventName,
@@ -269,5 +253,4 @@ export {
   LoadMoreButton,
   LoadMoreWrapper,
   EventSearchResultsTitleWrapper,
-  EventSearchResultsText,
 };

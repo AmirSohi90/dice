@@ -1,11 +1,14 @@
 import React from 'react';
 import {
-    EventSearchResultsTitleWrapper,
-    EventsWrapper,
-    EventSearchResultsText, EventsListWrapper,
+  EventSearchResultsTitleWrapper,
+  EventsListWrapper,
 } from '../EventResultsPage.styles';
 import { EventDetail } from './EventDetail';
 import { EventsByVenueResponse } from '../hooks/useGetEventsByVenue';
+import {
+  PageLayout,
+  HeadingText,
+} from '../../SharedStyledComponents/SharedStylingComponents.styles';
 
 type Props = {
   events: Array<EventsByVenueResponse>;
@@ -17,16 +20,14 @@ export const EventsList: React.FC<Props> = ({ events, venueName }) => {
     <EventsListWrapper>
       {!!venueName && (
         <EventSearchResultsTitleWrapper>
-          <EventSearchResultsText>
-            Your search results for {venueName}
-          </EventSearchResultsText>
+          <HeadingText>Your search results for {venueName}</HeadingText>
         </EventSearchResultsTitleWrapper>
       )}
-      <EventsWrapper>
+      <PageLayout>
         {events?.map((event) => (
-          <EventDetail {...event} />
+          <EventDetail key={event.id} {...event} />
         ))}
-      </EventsWrapper>
+      </PageLayout>
     </EventsListWrapper>
   );
 };
