@@ -25,24 +25,24 @@ font-size: 0.875rem;
 padding: 12px 0;
 `;
 
+const DiceLogo = styled.img`
+  width: 116px;
+`
+
 const SearchFormWrapper = styled.div`
-  padding: 80px 0 0;
   z-index: 1;
   background-color: ${colours.black};
   position: fixed;
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
+  flex-direction: column;
 `;
 
 const SearchByVenueForm = styled.form`
   width: 100%;
   max-width: 1080px;
-  padding: 0 5%;
-
-  @media screen and (min-width: ${breakPoints.tablet}) {
-    padding: 0 5%;
-  }
 `;
 
 const EventImageWrapper = styled.div<EventImageProps>`
@@ -68,7 +68,7 @@ const SearchByVenueTextInput = styled.input`
 `;
 
 const EventsListWrapper = styled.div`
-  padding-top: 126px;
+  padding-top: 106px;
 `;
 
 const EventWrapper = styled.div`
@@ -235,6 +235,7 @@ const EventSearchResultsTitleWrapper = styled.div`
 `;
 
 export {
+  DiceLogo,
   SearchFormWrapper,
   SearchByVenueForm,
   SearchByVenueTextInput,
